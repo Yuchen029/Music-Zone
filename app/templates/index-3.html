@@ -1,0 +1,407 @@
+﻿{%  extends "base.html" %}
+
+{%  block content %}
+    <!--Title and Feature History Area Start-->
+    <div class="feature-history-area">
+        <div class="single-slider slider-style-3">
+            <div class="container">
+                <div style="margin-top: 135px;">
+                    <h1 style="color: #fff;font-size: 100px;line-height: 100px;font-weight: 500;text-align: center">2022 {{ _('Music Zone') }}</h1>
+                    <div style="background-color: #fff;"></div>
+                    <div class="slider-btn" style="text-align: center;margin-top: 25px">
+                        <a href="{{ url_for('main.shop', c="all") }}" >{{ _('Music Instruments Collection') }} <i class="fa fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <!--Single Feature Start-->
+                    <div class="single-feature mb-35">
+                        <div class="feature-icon">
+                            <span class="lnr lnr-rocket"></span>
+                        </div>
+                        <div class="feature-content">
+                            <h3>{{ _('FREE SHIPPING') }}</h3>
+                            <p>{{ _('ALL ORDER OVER $100') }}</p>
+                        </div>
+                    </div>
+                    <!--Single Feature End-->
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <!--Single Feature Start-->
+                    <div class="single-feature mb-35">
+                        <div class="feature-icon">
+                            <span class="lnr lnr-phone"></span>
+                        </div>
+                        <div class="feature-content">
+                            <h3>24/7 {{ _('DEDICATED SUPPORT') }}</h3>
+                            <p>0123 456 789</p>
+                        </div>
+                    </div>
+                    <!--Single Feature End-->
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <!--Single Feature Start-->
+                    <div class="single-feature mb-35" style="height: 160px">
+                        <div class="feature-icon">
+                            <span class="lnr lnr-redo"></span>
+                        </div>
+                        <div class="feature-content">
+                            <h3>{{ _('MONEY BACK') }}</h3>
+                            <p>{{ _('IF THE ITEM DIDN’T SUIT YOU') }}</p>
+                        </div>
+                    </div>
+                    <!--Single Feature End-->
+                </div>
+            </div>
+        </div>
+        <div class="container mt-85">
+            <div class="row">
+                <!--Section Title Start-->
+                <div class="col-12">
+                    <div class="section-title text-center mb-35">
+                        <h2 style="color: navajowhite">{{ _('Our History') }}</h2>
+                        <span>{{ _('A little story about us') }}</span>
+                    </div>
+                </div>
+                <!--Section Title End-->
+            </div>
+            <div class="row">
+                <div class="col-lg-8 ml-auto mr-auto">
+                    <div class="history-area-content text-center">
+                        <p><strong style="color: antiquewhite">{{ _('Founded in 1993 by the BECKER family in Dublin, Ireland, and is a family-owned musical instrument sales business. All of its business have been walk-in retail customers, and the company now wanted to expand into the online market.') }}</strong></p>
+                        <p style="color: white">{{ _('Since its establishment, the company has always been in pursuit of excellent quality, providing sincere service as the purpose, and hoping that every local people can enjoy the fun brought by music.') }} {{_('The company\'s main products are piano, violin, guitar, and other more than ten varieties and ancillary services, selling well in Dublin.') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Title and Feature History Area End-->
+    <!--Shop Collections Area Start-->
+    <div class="shop-collection-area gold-bg pt-120 pb-25">
+        <div class="container">
+            <div class="row">
+                {% if products_collection | count != 0 %}
+                    <div class="col-md-6 col-left">
+                        <!--Single Collection Start-->
+                        <div class="single-collection mb-35">
+                            <div class="collection-img text-right mb-50">
+                                <img src="{{ products_collection[0].imagePaths[0].image_path }}" alt="">
+                            </div>
+                            <div class="collection-content">
+                                <h3>{{ products_collection[0].name }}</h3>
+                                <h4>{{ _('Category:') }} {{ products_collection[0].categories[0].name }}</h4>
+                                <p>{{ products_collection[0].description }}</p>
+                                <h2>${{ products_collection[0].price }}</h2>
+                                <a class="collection-btn" href="{{ url_for('main.single_product', p=products_collection[0].id) }}">{{ _('Buy Now') }}</a>
+                            </div>
+                        </div>
+                        <!--Single Collection End-->
+                    </div>
+                    <div class="col-md-6 col-right">
+                        <!--Single Collection Start-->
+                        <div class="single-collection mb-35">
+                            <div class="collection-content mb-50">
+                                <h3>{{ products_collection[1].name }}</h3>
+                                <h4>{{ _('Category:') }} {{ products_collection[1].categories[0].name }}</h4>
+                                <p>{{ products_collection[1].description }}</p>
+                                <h2>${{ products_collection[1].price }}</h2>
+                                <a class="collection-btn" href="{{ url_for('main.single_product', p=products_collection[1].id) }}">{{ _('Buy Now') }}</a>
+                            </div>
+                            <div class="collection-img text-left">
+                                <img src="{{ products_collection[1].imagePaths[0].image_path }}" alt="">
+                            </div>
+                        </div>
+                        <!--Single Collection End-->
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!--Shop Collections Area End-->
+    <!--Product Area Start-->
+    <div class="product-area" style="background: linear-gradient(to bottom, #eeeae5, white)">
+        <div class="container">
+            <div class="row">
+                <!--Section Title Start-->
+                <div class="col-12">
+                    <div class="section-title text-center mb-35">
+                        <span>{{ _('The Most Trendy') }}</span>
+                        <h3>{{ _('Featured Products') }}</h3>
+                    </div>
+                </div>
+                <!--Section Title End-->
+            </div>
+            <div class="row">
+                <div class="product-slider-active">
+                    {% for items in products_area %}
+                        {% if items | count > 1 %}
+                            <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
+                        {% endif %}
+                            {% for item in items %}
+                                <!--Row Product Start-->
+                                <div class="single-product mb-25">
+                                    <div class="product-img img-full">
+                                        <a href="{{ url_for('main.single_product', p=item.id) }}">
+                                            <img src="{{ item.imagePaths[0].image_path }}" alt="">
+                                        </a>
+                                        <span class="onsale">{{ _('Sale!') }}</span>
+{#                                            <div class="product-action">#}
+{#                                                <ul>#}
+{#                                                    <li><a href="#open-modal" data-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>#}
+{#                                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>#}
+{#                                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+                                    </div>
+                                    <div class="product-content">
+                                        <h2><a href="{{ url_for('main.single_product', p=item.id) }}">{{ item.name }}</a></h2>
+                                        <div class="product-price">
+                                            <div class="price-box">
+                                                <span class="regular-price">${{ item.price }}</span>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                <a tabindex="0" style="cursor: pointer" onclick='add_to_cart("{{ item.id }}", "{{ item.name }}", "{{ item.imagePaths[0].image_path }}", "{{ item.price }}")'>{{ _('Add To Cart') }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Row Product End-->
+                            {% endfor %}
+                        {% if items | count > 1 %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Product Area End-->
+    <!--Product Countdown Area Start-->
+    <div class="product-countdown-area mt-110 ml-50 mr-50">
+        <div class="container">
+            <div class="row">
+                <!--Section Title Start-->
+                <div class="col-12">
+                    <div class="section-title text-center mb-30">
+                        <h3>{{ _('Deal of The Day') }}</h3>
+                    </div>
+                </div>
+                <!--Section Title End-->
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-10 col-12 ml-auto mr-auto mb-20">
+                    <!--Count Down Area Start-->
+                    <div class="count-down-area">
+                        <!--Count Down Start-->
+                        <div class="countdown-inner">
+                            <div class="count-box">
+                                <div class="pro-countdown" data-countdown="2022/07/01"></div>
+                            </div>
+                        </div>
+                        <!--Count Down End-->
+                        <!--Count Down Start-->
+                        <div class="countdown-inner">
+                            <div class="count-box">
+                                <div class="pro-countdown" data-countdown="2022/07/01"></div>
+                            </div>
+                        </div>
+                        <!--Count Down End-->
+                        <!--Count Down Start-->
+                        <div class="countdown-inner">
+                            <div class="count-box">
+                                <div class="pro-countdown" data-countdown="2022/07/01"></div>
+                            </div>
+                        </div>
+                        <!--Count Down End-->
+                        <!--Count Down Start-->
+                        <div class="countdown-inner">
+                            <div class="count-box">
+                                <div class="pro-countdown" data-countdown="2022/07/01"></div>
+                            </div>
+                        </div>
+                        <!--Count Down End-->
+                        <!--Count Down Start-->
+                        <div class="countdown-inner">
+                            <div class="count-box">
+                                <div class="pro-countdown" data-countdown="2022/07/01"></div>
+                            </div>
+                        </div>
+                        <!--Count Down End-->
+                    </div>
+                    <!--Count Down Area End-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="offer-slider">
+                    {% for items in products_countdown %}
+                        <div class="col-md-4">
+                            {% for item in items %}
+                                <!--Single Product Start-->
+                                <div class="single-product mb-25">
+                                    <div class="product-img img-full">
+                                        <a href="{{ url_for('main.single_product',p=item.id) }}">
+                                            <img src="{{ item.imagePaths[0].image_path }}" alt="">
+                                        </a>
+                                        <span class="onsale">{{ _('Sale!') }}</span>
+{#                                            <div class="product-action">#}
+{#                                                <ul>#}
+{#                                                    <li><a href="#open-modal" data-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>#}
+{#                                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>#}
+{#                                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+                                    </div>
+                                    <div class="product-content">
+                                        <h2><a href="{{ url_for('main.single_product', p=item.id) }}">{{ item.name }}</a></h2>
+                                        <div class="product-price">
+                                            <div class="price-box">
+                                                <span class="regular-price">${{ item.price }}</span>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                <a tabindex="0" style="cursor: pointer" onclick='add_to_cart("{{ item.id }}", "{{ item.name }}", "{{ item.imagePaths[0].image_path }}", "{{ item.price }}")'>{{ _('Add To Cart') }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Single Product End-->
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Product Countdown Area End-->
+    <!--Banner Area Start-->
+    <div class="banner-area pt-110">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <!--Single Banner Area Start-->
+                    <div class="single-banner mb-35">
+                        <div class="banner-img">
+                            <a href="#">
+                                <img src="../static/storage/background/banner1.jpeg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!--Single Banner Area End-->
+                </div>
+                <div class="col-md-6">
+                    <!--Single Banner Area Start-->
+                    <div class="single-banner mb-35">
+                        <div class="banner-img">
+                            <a href="#">
+                                <img src="../static/storage/background/banner2.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!--Single Banner Area End-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Banner Area End-->
+    <!--Bestseller List Product Area Start-->
+    <div class="bestseller-list-product-area mt-80">
+        <div class="container">
+            <div class="row">
+                <!--Section Title Start-->
+                <div class="col-12">
+                    <div class="section-title text-center mb-35">
+                        <span>{{ _('The Most Trendy') }}</span>
+                        <h3>{{ _('Bestseller Products') }}</h3>
+                    </div>
+                </div>
+                <!--Section Title End-->
+            </div>
+            <div class="row">
+                <div class="product-list-slider-active">
+                    {% for items in products_best_seller %}
+                        <div class="col-md-4">
+                            {% for item in items %}
+                                <!--Row Product Start-->
+                                <div class="single-product product-list mb-35">
+                                    <div class="list-col-4">
+                                        <div class="product-img img-full">
+                                            <a href="{{ url_for('main.single_product', p=item.id) }}"><img src="{{ item.imagePaths[0].image_path }}" alt=""></a>
+                                            <span class="onsale">{{ _('Sale!') }}</span>
+{#                                                <div class="product-action">#}
+{#                                                    <ul>#}
+{#                                                        <li><a href="#open-modal" data-toggle="modal" title="Quick view" tabindex="0"><i class="fa fa-search"></i></a></li>#}
+{#                                                        <li><a href="#" tabindex="0"><i class="fa fa-heart-o"></i></a></li>#}
+{#                                                        <li><a href="#" tabindex="0"><i class="fa fa-refresh"></i></a></li>#}
+{#                                                    </ul>#}
+{#                                                </div>#}
+                                        </div>
+                                    </div>
+                                    <div class="list-col-8">
+                                        <div class="product-content">
+                                            <h2><a href="{{ url_for('main.single_product', p=item.id) }}">{{ item.name }}</a></h2>
+                                            <div class="product-price">
+                                                <div class="price-box">
+                                                    {% if item.discount < 1 %}
+                                                        <span class="price">${{ item.price }}</span>
+                                                    {% endif %}
+                                                    <span class="regular-price">${{ item.price * item.discount }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                <a tabindex="0" style="cursor: pointer" onclick='add_to_cart("{{ item.id }}", "{{ item.name }}", "{{ item.imagePaths[0].image_path }}", "{{ item.price }}")'>{{ _('Add To Cart') }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Row Product End-->
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function add_to_cart(id, name, image_path, price) {
+            $.post(
+                "{{ url_for('main.add_to_cart') }}",
+                {'product_id': id, 'product_count': 1},
+                function(data) {
+                    const status = data['status'];
+                    if (status === 0){
+                        let msg = "Product " + name + " added into your shopping cart";
+                        $("#flash_messages").append('<div class="alert alert-warning" style="margin-bottom: 0"><button type="button" class="close" data-dismiss="alert">x</button>' + msg + '</div>');
+                        setTimeout(function hide_note() {
+                            document.getElementById("flash_messages").innerHTML="";
+                        }, 3000);
+
+                        document.getElementById("mini_cart_count").innerText=data['count'];
+                        document.getElementById("mini_cart_price").innerText="$"+data['product_price'];
+                        document.getElementById("mini_cart_subtotal").innerText="$"+data['product_price'];
+
+                        // update mini-cart list
+                        if (data['count'] <= 3){
+                            var mci_html = "";  // mini cart item html
+                            mci_html += '<li class="single-cart-item"><div class="cart-img">';
+                            mci_html += '<a href="{{ url_for("main.single_product", p=id) }}">';
+                            mci_html += '<img src=' + image_path + ' alt="" style="width: 80px; height: 80px"></a></div>';
+                            mci_html += '<div class="cart-content"><h5 class="product-name">';
+                            mci_html += '<a href="{{ url_for("main.single_product", p=id) }}">' + name + '</a></h5>';
+                            mci_html += '<span class="cart-price">1 × $' + price.toString() + '</span></div></li>';
+                            $('#mini_cart_list').append(mci_html);
+                        }
+                    } else {
+                        let msg = "Product " + name + " has already in your shopping cart";
+                        $("#flash_messages").append('<div class="alert alert-warning" style="margin-bottom: 0"><button type="button" class="close" data-dismiss="alert">x</button>' + msg + '</div>');
+                        setTimeout(function hide_note() {
+                            document.getElementById("flash_messages").innerHTML="";
+                        }, 3000);
+                    }
+                }
+            )
+        }
+    </script>
+{% endblock %}

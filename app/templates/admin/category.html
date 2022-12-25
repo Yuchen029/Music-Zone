@@ -1,0 +1,185 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <!-- [ breadcrumb ] end -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
+                            <!--[ Recent Users ] start-->
+                            <div class="col-sm-12">
+                                <div class="card Recent-Users">
+                                    <div class="card-header">
+                                        <h5>{{ _('Category Management') }}</h5>
+                                        <a data-bs-toggle="modal" data-bs-target="#addModal" class="feather icon-plus-square" style="float:right"> ADD</a>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" role="tabpanel" aria-labelledby="home-tab">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>{{ _('Name') }}</th>
+                                                    <th class="text-center">{{ _('Operation') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for category in categories %}
+                                                <tr>
+                                                    <td>
+                                                        <h6 class="m-0">{{ category.id }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ category.name }}</h6>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a data-bs-toggle="modal" data-bs-target="#modifyModal"
+                                                           onclick="Values_id_modify({{ category.id }})" class="feather icon-info theme-bg3" style="cursor: pointer"></a>
+                                                        <a data-bs-toggle="modal" data-bs-target="#removeModal"
+                                                           onclick="Values_id({{ category.id }})" class="feather icon-trash-2 theme-bg4" style="cursor: pointer"></a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--[ Recent Users ] end-->
+                        </div>
+                        <!-- [ Main Content ] end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content ] end -->
+
+<!-- Add Modal Start -->
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{ _('Add New Category') }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('admin.add_category') }}" method="post" name="addForm" onsubmit="return addValidate()">
+                <!-- Content -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{ _('Name') }}</label>
+                        <input name="name" class="form-control" placeholder="Name">
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">{{ _('Confirm') }}</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Modal End -->
+
+<!-- Remove Modal Start -->
+<div class="modal fade" id="removeModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{ _('Remove Category') }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('admin.remove_category') }}" method="post" name="removeForm" onsubmit="return removeValidate()">
+                <!-- Content -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{ _('Confirm Delete') }}</label>
+                        <input name="confirm" class="form-control" placeholder="Please input yes to confirm your remove">
+                    </div>
+                    <input type="hidden" id="remove_id" name="remove_id" value="">
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">{{ _('Confirm') }}</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Remove Modal End -->
+
+<!-- Modify Modal Start -->
+<div class="modal fade" id="modifyModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{ _('Modify Category') }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('admin.modify_category') }}" method="post" name="modifyForm" onsubmit="return modifyValidate()">
+                <!-- Content -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{ _('Name Update') }}</label>
+                        <input name="name" class="form-control" placeholder="New Category Name">
+                    </div>
+                    <input type="hidden" id="modify_id" name="modify_id" value="">
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">{{ _('Confirm') }}</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modify Modal End -->
+
+<script>
+    function Values_id(ID) {
+        return $("#remove_id").val(ID);
+    }
+
+    function Values_id_modify(ID) {
+        return $("#modify_id").val(ID);
+    }
+
+    function removeValidate() {
+        if (removeForm.confirm.value!=='yes') {
+            alert('You did not input yes, right?');
+            return false;
+        }
+        return true;
+    }
+
+    function modifyValidate() {
+        if (!modifyForm.name.value) {
+            alert('Please enter a name');
+            return false;
+        }
+        return true;
+    }
+
+    function addValidate() {
+        if (!addForm.name.value) {
+            alert('Please enter a name');
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}

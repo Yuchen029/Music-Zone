@@ -1,0 +1,82 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <!-- [ breadcrumb ] end -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
+                            <!--[ Recent Users ] start-->
+                            <div class="col-sm-12">
+                                <div class="card Recent-Users">
+                                    <div class="card-header">
+                                        <h5>{{ _('Order Management') }}</h5>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" role="tabpanel" aria-labelledby="home-tab">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>{{ _('Purchaser') }}</th>
+                                                    <th>{{ _('Place Time') }}</th>
+                                                    <th>{{ _('Ship Method') }}</th>
+                                                    <th>{{ _('Status') }}</th>
+                                                    <th>{{ _('Priority') }}</th>
+                                                    <th class="text-center">{{ _('Operation') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for o in orders %}
+                                                <tr>
+                                                    <td>
+                                                        <h6 class="m-0">{{ o.id }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="{{ o.buyer.avatar_path }}" alt="activity-user">{{ o.buyer.username }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ o.timestamp }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ o.ship_way }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ o.status }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ o.priority }}</h6>
+                                                    </td>
+                                                    <td class="text-center">
+{#                                                        <a href="{{ url_for('admin.modify_product', product_id=product.id) }}" class="label theme-bg2 text-white f-12">Modify</a>#}
+                                                        <a title="View Detail" href="{{ url_for('admin.modify_order', order_id=o.id) }}" class="feather icon-info theme-bg3" style="cursor: pointer"></a>
+                                                        <a title="Increase Priority" href="{{ url_for('admin.priority_up', order_id=o.id) }}" class="feather icon-arrow-up theme-bg5" style="cursor: pointer"></a>
+                                                        <a title="Decrease Priority" href="{{ url_for('admin.priority_down', order_id=o.id) }}" class="feather icon-arrow-down theme-bg4" style="cursor: pointer"></a>
+{#                                                        <a data-bs-toggle="modal" data-bs-target="#removeModal" onclick="Values_id({{ product.id }})" class="feather icon-trash-2 theme-bg4" style="cursor: pointer"></a>#}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="pagination justify-content-center">{{ pagination.links }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--[ Recent Users ] end-->
+                        </div>
+                        <!-- [ Main Content ] end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content ] end -->
+{% endblock %}

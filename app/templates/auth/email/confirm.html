@@ -1,0 +1,7 @@
+<p>Dear {{ user.username }},</p>
+<p>Welcome to <b>Music Zone</b>!</p>
+<p>To enjoy the musical feast, please <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">click here</a>.</p>
+<p>You can also paste the following link in your browser:</p>
+<p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
+<p>Best regards,</p>
+<p>Team SEP2-7</p>

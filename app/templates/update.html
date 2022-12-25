@@ -1,0 +1,56 @@
+{% extends 'blog-base.html' %}
+
+{% block content %}
+		<div id="main" class="content">
+			<div class="container">
+				<style>
+					body.custom-background {
+						background: #fff
+					}
+					
+					.container {
+						padding: 10px 0px;
+					}
+				</style>
+				<section class="post_content">
+					<header class="post_header">
+						<h1 class="post_title">{{ _('Update') }}</h1>
+					</header>
+					<div class="applicant__timeline">
+						<ul>
+							<li>
+								<div>{{ _('Update to formal version') }}！<br /><span class="time-ago">2022.06.01</span></div>
+							</li>
+							<li class="warning">
+								<div>{{ _('Fix comment box display error') }}<br /><span class="time-ago">2022.05.30</span></div>
+							</li>
+							<li class="success">
+								<div>{{ _('Update add blog UI design') }}<br /><span class="time-ago">2022.05.28</span></div>
+							</li>
+                            <li class="success">
+								<div>{{ _('Change background image') }}<br /><span class="time-ago">2022.05.27</span></div>
+							</li>
+                            <li class="success">
+								<div>{{ _('Support multi-language') }}<br /><span class="time-ago">2022.05.24</span></div>
+							</li>
+                            <li class="success">
+								<div>{{ _('Add search function') }}<br /><span class="time-ago">2022.05.21</span></div>
+							</li>
+                            <li class="warning">
+								<div>{{ _('Fix image display bug') }}<br /><span class="time-ago">2022.05.17</span></div>
+							</li>
+                            <li class="success">
+								<div>{{ _('Add comment feature') }}<br /><span class="time-ago">2022.05.14</span></div>
+							</li>
+                            <li class="success">
+								<div>{{ _('Support post images') }}<br /><span class="time-ago">2022.05.07</span></div>
+							</li>
+                            <li>
+								<div>{{ _('First version') }} ！<br /><span class="time-ago">2022.05.01</span></div>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</div>
+{% endblock %}

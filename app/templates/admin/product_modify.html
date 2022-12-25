@@ -1,0 +1,194 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>{{ _('Product Detail') }}</h5>
+                                </div>
+                                <div class="card-block">
+                                    <!-- [ Main Content ] start -->
+                                    <div class="row">
+                                        {% for ip in product.imagePaths %}
+                                            {% if product.imagePaths.all()|count == 3 %}
+                                            <div class="col-md-4" style="text-align: center;">
+                                                <img src="{{ ip.image_path }}" alt="" style="height: 200px">
+                                            </div>
+                                            {% elif product.imagePaths.all()|count == 2 %}
+                                            <div class="col-md-6" style="text-align: center">
+                                                <img src="{{ ip.image_path }}" alt="" style="height: 200px">
+                                            </div>
+                                            {% elif product.imagePaths.all()|count == 1 %}
+                                            <div class="col-md-12" style="text-align: center">
+                                                <img src="{{ ip.image_path }}" alt="" style="height: 200px">
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="row">
+                                        {% for ip in product.imagePaths %}
+                                            {% if product.imagePaths.all()|count == 3 %}
+                                            <div class="col-md-4" style="text-align: center;">
+                                                <a data-bs-toggle="modal" data-bs-target="#modifyImageModal"
+                                                   onclick="Values_product_id({{ ip.product_id }}); Values_image_id({{ ip.id }})">UPDATE IMAGE</a>
+                                            </div>
+                                            {% elif product.imagePaths.all()|count == 2 %}
+                                            <div class="col-md-6" style="text-align: center">
+                                                <a data-bs-toggle="modal" data-bs-target="#modifyImageModal"
+                                                   onclick="Values_product_id({{ ip.product_id }}); Values_image_id({{ ip.id }})">UPDATE IMAGE</a>
+                                            </div>
+                                            {% elif product.imagePaths.all()|count == 1 %}
+                                            <div class="col-md-12" style="text-align: center">
+                                                <a data-bs-toggle="modal" data-bs-target="#modifyImageModal"
+                                                   onclick="Values_product_id({{ ip.product_id }}); Values_image_id({{ ip.id }})">UPDATE IMAGE</a>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div style="margin-top: 30px">
+                                        <form action="{{ url_for('admin.modify_product', product_id=id) }}" method="post" name="modifyForm"
+                                              onsubmit="return modifyValidate()" style="padding-left: 15%; padding-right: 10%" class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{ _('Name') }}</label>
+                                                    <input name="name" value="{{ product.name }}" class="form-control" placeholder="Name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>{{ _('Weight') }}</label>
+                                                    <input name="weight" value="{{ product.weight }}" class="form-control" placeholder="Weight">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>{{ _('Price') }}</label>
+                                                    <input name="price" value="{{ product.price }}" class="form-control" placeholder="Price">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>{{ _('Discount') }}</label>
+                                                    <input name="discount" value="{{ product.discount }}" class="form-control" placeholder="Discount">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>{{ _('Inventory') }}</label>
+                                                    <input name="inventory" value="{{ product.inventory }}" class="form-control" placeholder="Inventory">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{ _('Description') }}</label>
+                                                    <textarea name="description" class="form-control" placeholder="Description" rows="6">{{ product.description }}</textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>{{ _('Category') }}</label>
+                                                    <div>
+                                                    {% for key in sort_dict %}
+                                                    <div class="form-check form-check-inline">
+                                                        <label class="form-check-label">
+                                                            {% if sort_dict[key] == 1 %}
+                                                            <input type="checkbox" name="cb" class="form-check-input" value="{{ key }}" checked>{{ key }}
+                                                            {% else %}
+                                                            <input type="checkbox" name="cb" class="form-check-input" value="{{ key }}">{{ key }}
+                                                            {% endif %}
+                                                        </label>
+                                                    </div>
+                                                    {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-info" style="float: right">{{ _('Confirm') }}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- [ Main Content ] end -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+<!-- Modify Image Modal Start -->
+<div class="modal fade" id="modifyImageModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{ _('Modify Product Image') }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('admin.modify_product_image') }}" method="post" name="modifyImageForm" enctype="multipart/form-data">
+                <!-- Content -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="file" onchange="showImg()" id="img_file" name="image" class="form-control" >
+                    </div>
+                    <div style="text-align: center;">
+                        <img src="" id="img_id" alt="">
+                    </div>
+                    <input type="hidden" id="product_id" name="product_id" value="">
+                    <input type="hidden" id="image_id" name="image_id" value="">
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">{{ _('Confirm') }}</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modify Image Modal End -->
+
+<script>
+    function modifyValidate() {
+        const name = modifyForm.name.value;
+        const weight = modifyForm.weight.value;
+        const priceNumber = modifyForm.price.value;
+        const discount = modifyForm.discount.value;
+        const inventoryNumber = modifyForm.inventory.value;
+        const regPos = /^[0-9]+.?[0-9]*/; <!-- includes integer, float, and zero -->
+        const regInventory = /^\d+$/;
+        if (!name || !weight || !priceNumber || !discount || !inventoryNumber) {
+            alert('Please fill all the fields');
+            return false;
+        }
+        if (!regPos.test(priceNumber)) {
+            alert('Price can only be number');
+            return false;
+        }
+        if (!regInventory.test(inventoryNumber)) {
+            alert('Inventory can only be non-negative integer')
+            return false;
+        }
+        return true;
+    }
+
+    function Values_product_id(ID) {
+        return $("#product_id").val(ID);
+    }
+
+    function Values_image_id(ID) {
+        return $("#image_id").val(ID);
+    }
+
+    function showImg(){
+        <!--Find user uploaded photos with Id and save the address as 'file'-->
+        const file = document.getElementById('img_file').files[0];
+        <!--Read the image by reading the URL address of image-->
+        const re = new FileReader();
+        re.readAsDataURL(file);
+        <!--Change the attribution of image-->
+        <!--Returns the target node of the event (the node that triggered the event), in this case uploading a photo-->
+        re.onload = function(re){
+            $('#img_id').attr("src", re.target.result);
+        }
+    }
+</script>
+{% endblock %}

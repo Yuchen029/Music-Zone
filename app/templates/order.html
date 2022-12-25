@@ -1,0 +1,197 @@
+{#<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
+</head>
+<body>#}
+{% extends 'base.html' %}
+{% block content %}
+<!--Breadcrumb Tow Start-->
+<div class="breadcrumb-tow mb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-title">
+                    <h1>{{ _('Order') }}</h1>
+                </div>
+                <div class="breadcrumb-content breadcrumb-content-tow">
+                    <ul>
+                        <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+                        <li class="active"><a href="{{ url_for('main.account', user_id=current_user.id) }}">{{ _('My Order') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Breadcrumb Tow End-->
+<div class="checkout-area mb-80">
+    <div class="container">
+        <div class="product-filter mb-35">
+            <div class="box-status">
+                <div class="box-side box-front"></div>
+                <div class="box-side box-back"></div>
+                <div class="box-side box-left"></div>
+                <div class="box-side box-right"></div>
+                <div class="box-side box-top">
+                    <div class="box-tl"></div>
+                    <div class="box-tr"></div>
+                </div>
+                <div class="box-side box-bottom"></div>
+                <div class="text"> {{ order.status }} </div>
+            </div>
+{#            <h5>Status:#}
+{#            {{ order.status }}#}
+{#            </h5>#}
+        </div>
+        <div class="row">
+            <div class="col-lg-7 col-12">
+                <div class="checkbox-form product-filter">
+                    <h5>{{ _('Information') }}</h5>
+                </div>
+                <div class="entry-summary blog-post-description">
+                    <div class="row">
+                        <div class="col-6">
+                            <blockquote style="margin: 0 0 10px 0; padding: 12px 15px; font-style: normal">
+                            <h4><strong>{{ _('Name') }}: </strong>{{ order.name }}</h4>
+                            </blockquote>
+                        </div>
+                        <div class="col-6">
+                            <blockquote style="margin: 0 0 10px 0; padding: 12px 15px; font-style: normal">
+                            <h4><strong>{{ _('Gender') }}: </strong>{{ order.gender }}</h4>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <blockquote style="margin: 0 0 10px 0; padding: 12px 15px; font-style: normal">
+                            <h4><strong>{{ _('Phone Number') }}: </strong>{{ order.phone_number }}</h4>
+                            </blockquote>
+                        </div>
+                        <div class="col-6">
+                            <blockquote style="margin: 0 0 10px 0; padding: 12px 15px; font-style: normal">
+                            <h4><strong>{{ _('Ship Method') }}: </strong>{{ order.ship_way }}</h4>
+                            </blockquote>
+                        </div>
+                    </div>
+                    {% if order.ship_way == 'Delivery' %}
+                        <blockquote style="margin: 0 0 10px 0; padding: 12px 15px; font-style: normal">
+                        <h4><strong>{{ _('Address') }}: </strong>{{ order.country }}-{{ order.city }}-{{ order.street }}-{{ order.detail }}</h4>
+                        </blockquote>
+                    {% endif %}
+                    <blockquote style="margin: 0 0 10px 0; padding: 12px 15px; font-style: normal">
+                    <h4><strong>{{ _('Note') }}: </strong>{{ order.note }}</h4>
+                    </blockquote>
+                    <a class="btn_2" data-toggle="modal" href="#orderModal" onclick="Values_id({{ order.id }})">{{ _('Edit Info') }}</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-12">
+                <div class="your-order">
+                    <h3>{{ _('Price') }}</h3>
+                    <div class="your-order-table table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="cart-product-name">{{ _('Product') }}</th>
+                                    <th class="cart-product-total">{{ _('Quantity') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for count, product in product_zip %}
+                                <tr class="cart_item">
+                                    <td class="cart-product-name">
+                                        {% if product.is_hidden == False %}
+                                            <a href="{{ url_for('main.single_product', p=product.id) }}">{{ product.name }}</a>
+                                        {% else %}
+                                            <a>{{ product.name }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td class="cart-product-total"><span class="amount">{{ count }}</span></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr class="order-total">
+                                    <th>{{ _('Order Total Price') }}</th>
+                                    <td><strong><span class="amount" id="total_cost">${{ order.price }}</span></strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="orderModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
+            </div>
+            <form action="{{ url_for('main.my_order_modify') }}" method="post" name="orderForm" onsubmit="return checkForm()">
+                <!-- Content -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><strong>{{ _('Phone Number') }}</strong>
+                            <input name="phone_number" class="form-control" type="number" value="{{ order.phone_number }}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>{{ _('Country') }}</strong>
+                            <input name="country" class="form-control" type="text" value="{{ order.country }}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>{{ _('City') }}</strong>
+                            <input name="city" class="form-control" type="text" value="{{ order.city }}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>{{ _('Street') }}</strong>
+                            <input name="street" class="form-control" type="text" value="{{ order.street }}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>{{ _('Detail') }}</strong>
+                            <input name="detail" class="form-control" type="text" value="{{ order.detail }}">
+                        </label>
+                    </div>
+                    <input type="hidden" id="order_id" name="order_id" value="">
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">{{ _('Confirm') }}</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Values_id(ID) {
+        return $("#order_id").val(ID);
+    }
+
+    checkForm = function () {
+        const phone = orderForm.phone_number.value;
+        const country = orderForm.country.value;
+        const city = orderForm.city.value;
+        const street = orderForm.street.value;
+        const detail = orderForm.detail.value;
+        if (!phone || !country || !city || !street || !detail) {
+            alert('Please fill all the areas');
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}
+{#</body>#}
+{#</html>#}

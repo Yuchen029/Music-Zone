@@ -1,0 +1,423 @@
+﻿{#<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
+    <script src="../static/plugins/jquery/js/jquery.min.js"></script>
+
+</head>
+<body>#}
+{% extends 'base.html' %}
+{% block content %}
+    <script>
+        $(document).ready(function(){
+	        "use Strict";
+            const price = "$" + {{ low }} + " - $" + {{ high }};
+            const catInfo = '{{ cat }}' + " " + '{{ search }}';
+            $('#catselect').val(catInfo);
+            $('#priceselect').val(price);
+            $('#sortselect').val('{{ sort }}');
+            const select = document.getElementById("sortinput");
+            for(let i=0; i<select.options.length; i++){
+                if(select.options[i].value == '{{ sort }}') {
+                    select.options[i].selected = true;
+                    $('#sortinput').niceSelect('update');
+                    break;
+                }
+            }
+            $('#priceinput').on('click', function (){
+                const price = $('#amount').val();
+                $('#priceselect').val(price);
+                $('#pass').click();
+            });
+            $('#sortinput').on('change', function (){
+                const option = $('#sortinput').val();
+                $('#sortselect').val(option);
+                $('#pass').click();
+            });
+            const sliderrange = $('#slider-range');
+            const amountprice = $('#amount');
+            $(function() {
+                sliderrange.slider({
+                    range: true,
+                    min: {{ left }},
+                    max: {{ right }},
+                    values: [{{ low }}, {{ high }}],
+                    slide: function(event, ui) {
+                        amountprice.val("$" + ui.values[0] + " - $" + ui.values[1]);
+                    }
+                });
+                amountprice.val("$" + sliderrange.slider("values", 0) +
+                    " - $" + sliderrange.slider("values", 1));
+            });
+        });
+        window.onload = function () {
+            const status = localStorage.getItem("status");
+            if (status !== null){
+                if (status === "grid"){
+                    $('#grid').attr('class', "tab-pane fade show active");
+                    $('#list').attr('class', "tab-pane fade");
+                    $('#gridicon').attr('class', "active");
+                    $('#listicon').attr('class', "");
+                } else if (status === "list"){
+                    $('#grid').attr('class', "tab-pane fade");
+                    $('#list').attr('class', "tab-pane fade show active");
+                    $('#listicon').attr('class', "active");
+                    $('#gridicon').attr('class', "");
+                }
+            }
+        }
+        function selectCat(name, num){
+            if (num !== 0){
+                 $('#catselect').val(name);
+                $('#pass').click();
+            }
+        }
+        function changeToGrid(){
+            $('#grid').attr('class', "tab-pane fade show active");
+            $('#list').attr('class', "tab-pane fade");
+            localStorage.setItem("status", "grid");
+        }
+        function changeToList(){
+            $('#grid').attr('class', "tab-pane fade");
+            $('#list').attr('class', "tab-pane fade show active");
+            localStorage.setItem("status", "list");
+        }
+        function movePage(c, p){
+            const cat = $('#catselect').val();
+            const price = $('#priceselect').val();
+            const option = $('#sortselect').val();
+            $.post(
+                "{{ url_for('main.shop', c="page") }}",
+                {"cat": cat, "price": price, "sort": option},
+                function () {
+                    window.location.href = "/products/" +
+                                    c + "?page=" + p;
+                })
+        }
+        function add_to_cart(id, name, image_path, price) {
+            $.post(
+                "{{ url_for('main.add_to_cart') }}",
+                {'product_id': id, 'product_count': 1},
+                function(data) {
+                    const status = data['status'];
+                    if (status === 0){
+                        let msg = "Product " + name + " added into your shopping cart";
+                        $("#flash_messages").append('<div class="alert alert-warning" style="margin-bottom: 0"><button type="button" class="close" data-dismiss="alert">x</button>' + msg + '</div>');
+                        setTimeout(function hide_note() {
+                            document.getElementById("flash_messages").innerHTML="";
+                        }, 3000);
+
+                        document.getElementById("mini_cart_count").innerText=data['count'];
+                        document.getElementById("mini_cart_price").innerText="$"+data['product_price'];
+                        document.getElementById("mini_cart_subtotal").innerText="$"+data['product_price'];
+
+                        // update mini-cart list
+                        if (data['count'] <= 3){
+                            var mci_html = "";  // mini cart item html
+                            mci_html += '<li class="single-cart-item"><div class="cart-img">';
+                            mci_html += '<a href="{{ url_for("main.single_product", p=id) }}">';
+                            mci_html += '<img src=' + image_path + ' alt="" style="width: 80px; height: 80px"></a></div>';
+                            mci_html += '<div class="cart-content"><h5 class="product-name">';
+                            mci_html += '<a href="{{ url_for("main.single_product", p=id) }}">' + name + '</a></h5>';
+                            mci_html += '<span class="cart-price">1 × $' + price.toString() + '</span></div></li>';
+                            $('#mini_cart_list').append(mci_html);
+                        }
+                    } else {
+                        let msg = "Product " + name + " has already in your shopping cart";
+                        $("#flash_messages").append('<div class="alert alert-warning" style="margin-bottom: 0"><button type="button" class="close" data-dismiss="alert">x</button>' + msg + '</div>');
+                        setTimeout(function hide_note() {
+                            document.getElementById("flash_messages").innerHTML="";
+                        }, 3000);
+                    }
+                }
+            )
+        }
+    </script>
+		<!--Shop Area Start-->
+		<div class="shop-area mb-70" style="background: linear-gradient(to bottom, #eeebe6, rgb(255,255,255))">
+		    <div class="container">
+		        <div class="row">
+		            <div class="col-lg-3 order-2 order-lg-1">
+		                <!--Product Category Widget Start-->
+		                <div class="shop-sidebar">
+		                    <h4>{{ _('Product Categories') }}</h4>
+		                    <div class="categori-checkbox">
+		                        <form action="#">
+		                            <ul id="catinput">
+                                        {% if cat != "all" %}
+                                            <li><a style="cursor: pointer" onclick="selectCat('all')">{{ _('all') }}</a></li>
+                                        {% else %}
+                                            <li><a style="cursor: pointer; color:#dec674" onclick="selectCat('all')">{{ _('all') }}</a></li>
+                                        {% endif %}
+                                        {% for cate in categories %}
+                                            {% if cate.name != cat %}
+                                                <li><a style="cursor: pointer" onclick="selectCat('{{ cate.name }}', {{ cat_num[loop.index - 1] }})">{{ cate.name }}</a><span class="count">{{ cat_num[loop.index - 1] }}</span></li>
+                                            {% else %}
+                                                <li><a style="cursor: pointer; color:#dec674" onclick="selectCat('{{ cate.name }}', {{ cat_num[loop.index - 1] }})">{{ cate.name }}</a><span class="count">{{ cat_num[loop.index - 1] }}</span></li>
+                                            {% endif %}
+		                                {% endfor %}
+		                            </ul>
+		                        </form>
+		                    </div>
+		                </div>
+		                <!--Product Category Widget End-->
+		                <!--Price Filter Widget Start-->
+		                <div class="shop-sidebar">
+		                    <h4>{{ _('Filter by price') }}</h4>
+		                    <div class="price-filter">
+                                <div id="slider-range"></div>
+                                <div class="price-slider-amount">
+                                    <div class="label-input">
+                                        <label>{{ _('price') }} : </label>
+                                        <input type="text" readonly="readonly" id="amount" name="price" placeholder="Add Your Price" />
+                                    </div>
+                                    <button id="priceinput" type="button">{{ _('Filter') }}</button>
+                                </div>
+                            </div>
+		                </div>
+		                <!--Price Filter Widget End-->
+		                <!--Recent Product Widget Start-->
+                        {% if recommend|length > 0 %}
+		                <div class="shop-sidebar">
+		                    <h4>{{ _('Top Rated Products') }}</h4>
+		                    <div class="rc-product">
+		                        <ul>
+                                    {% for rec in recommend %}
+		                            <li>
+		                                <div class="rc-product-thumb img-full">
+		                                    <a href="{{ url_for('main.single_product', p=rec.id) }}"><img src={{ rec.imagePaths[0].image_path }} alt="" style="height: 72px; width: 72px"></a>
+		                                </div>
+		                                <div class="rc-product-content">
+		                                    <h6><a href="{{ url_for('main.single_product', p=rec.id) }}">{{ rec.name }}</a></h6>
+{#		                                    <div class="rc-product-review">#}
+{#		                                        <i class="fa fa-star"></i>#}
+{#		                                        <i class="fa fa-star"></i>#}
+{#		                                        <i class="fa fa-star"></i>#}
+{#		                                        <i class="fa fa-star"></i>#}
+{#		                                        <i class="fa fa-star"></i>#}
+{#		                                    </div>#}
+		                                    <div class="price-box">
+                                                <span class="regular-price">${{ rec.price }}</span>
+                                            </div>
+		                                </div>
+		                            </li>
+                                    {% endfor %}
+		                        </ul>
+		                    </div>
+		                </div>
+                        {% endif %}
+		                <!--Recent Product Widget End-->
+		                <!--Banner Widget Start-->
+		                <div class="shop-sidebar">
+                            <div class="sidebar-banner single-banner">
+		                        <div class="banner-img">
+		                            <img src="../static/storage/background/shop-left.jpg" alt=""></a>
+		                        </div>
+		                    </div>
+		                </div>
+		                <!--Banner Widget End-->
+		                <!--Product Tags Widget Start-->
+		                {#<div class="shop-sidebar">
+		                    <h4>Product Tags</h4>
+		                    <div class="product-tag">
+		                        <ul>
+		                            <li><a href="#">blouse</a></li>
+		                            <li><a href="#">clothes</a></li>
+		                            <li><a href="#">fashion</a></li>
+		                            <li><a href="#">handbag</a></li>
+		                            <li><a href="#">laptop</a></li>
+		                        </ul>
+		                    </div>
+		                </div>#}
+		                <!--Product Tags Widget End-->
+		            </div>
+		            <div class="col-lg-9 order-1 order-lg-2">
+		                <div class="shop-layout">
+                           <!--Breadcrumb One Start-->
+                            <div class="breadcrumb-one mb-120">
+                                <div class="breadcrumb-img">
+                                    <img src="../static/storage/background/shop-top.jpg" alt="">
+                                </div>
+                                <div class="breadcrumb-content">
+                                    <ul>
+                                        <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+                                        <li class="active">{{ _('Shop') }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                           <!--Breadcrumb One End-->
+		                    <!--Grid & List View Start-->
+		                    <div class="shop-topbar-wrapper d-md-flex justify-content-md-between align-items-center">
+		                        <div class="grid-list-option">
+		                             <ul class="nav">
+                                      <li>
+                                        <a id="gridicon" class="active" data-toggle="tab" href="javascript:void(0);" onclick="changeToGrid()"><i class="fa fa-th-large"></i></a>
+                                      </li>
+                                      <li>
+                                        <a id="listicon" data-toggle="tab" href="javascript:void(0);" onclick="changeToList()"><i class="fa fa-th-list"></i></a>
+                                      </li>
+                                    </ul>
+		                         </div>
+		                         <!--Toolbar Short Area Start-->
+		                         <div class="toolbar-short-area d-md-flex align-items-center">
+                                     <div class="toolbar-shorter ">
+                                        <label>{{ _('Sort By') }}:</label>
+                                         <select id="sortinput" class="wide">
+                                             <option value="all">{{ _('Nothing') }}</option>
+                                             <option value="az">{{ _('Name, A to Z') }}</option>
+                                             <option value="za">{{ _('Name, Z to A') }}</option>
+                                             <option value="lh">{{ _('Price, low to high') }}</option>
+                                             <option value="hl">{{ _('Price, high to low') }}</option>
+                                         </select>
+                                     </div>
+                                     {% if pagination.total == 1 %}
+                                        <p class="show-product">{{ _('Showing') }} 1 {{ _('of') }} 1 {{ _('result') }}</p>
+                                     {% else %}
+                                        {% if pagination.page * pagination.per_page > pagination.total %}
+                                            <p class="show-product">{{ _('Showing') }} {{ (pagination.page - 1) * pagination.per_page + 1 }}–{{ pagination.total }} {{ _('of') }} {{ pagination.total }} {{ _('results') }}</p>
+                                        {% else %}
+                                            <p class="show-product">{{ _('Showing') }} {{ (pagination.page - 1) * pagination.per_page + 1 }}–{{ pagination.page * pagination.per_page }} {{ _('of') }} {{ pagination.total }} {{ _('results') }}</p>
+                                        {% endif %}
+                                     {% endif %}
+                                 </div>
+		                         <!--Toolbar Short Area End-->
+		                    </div>
+		                    <!--Grid & List View End-->
+		                    <!--Shop Product Start-->
+		                    <div class="shop-product">
+		                        <div id="myTabContent-2" class="tab-content">
+		                            <div id="grid" style="overflow:scroll; overflow:hidden" class="tab-pane fade show active">
+		                                <div class="product-grid-view">
+		                                    <div class="row">
+                                                {% for product in products %}
+		                                        <div class="col-md-4">
+		                                            <!--Single Product Start-->
+                                                    <div class="single-product mb-25">
+                                                        <div class="product-img img-full">
+                                                            <a href="{{ url_for('main.single_product', p=product.id) }}">
+                                                                <img src={{ product.imagePaths[0].image_path }} alt="">
+                                                            </a>
+                                                            <span class="onsale">{{ _('Sale') }}!</span>
+{#                                                            <div class="product-action">#}
+{#                                                                <ul>#}
+{#                                                                    <li><a href="#open-modal" data-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>#}
+{#                                                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>#}
+{#                                                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+                                                        </div>
+                                                        <div class="product-content">
+                                                            <h2><a href="{{ url_for('main.single_product', p=product.id) }}">{{ product.name }}</a></h2>
+                                                            <div class="product-price">
+                                                                <div class="price-box">
+                                                                    <span class="regular-price">${{ product.price }}</span>
+                                                                </div>
+                                                                <div class="add-to-cart">
+                                                                    <a tabindex="0" style="cursor: pointer" onclick='add_to_cart("{{ product.id }}", "{{ product.name }}", "{{ product.imagePaths[0].image_path }}", "{{ product.price }}")'>{{ _('Add To Cart') }}</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--Single Product End-->
+		                                        </div>
+                                                {% endfor %}
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div id="list" style="overflow:scroll; overflow:hidden" class="tab-pane fade">
+		                                <div class="product-list-view">
+                                            {% for product in products %}
+		                                    <div class="product-list-item mb-40">
+		                                        <div class="row">
+		                                            <!--Single List Product Start-->
+		                                            <div class="col-md-4">
+		                                                <div class="single-product">
+		                                                    <div class="product-img img-full">
+		                                                        <a href="{{ url_for('main.single_product', p=product.id) }}">
+                                                                    <img src={{ product.imagePaths[0].image_path }} alt="">
+                                                                </a>
+                                                                <span class="onsale">{{ _('Sale') }}!</span>
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="col-md-8">
+		                                                <div class="product-content shop-list">
+		                                                    <h2><a href="{{ url_for('main.single_product', p=product.id) }}">{{ product.name }}</a></h2>
+{#		                                                    <div class="product-reviews">#}
+{#                                                                <i class="fa fa-star"></i>#}
+{#                                                                <i class="fa fa-star"></i>#}
+{#                                                                <i class="fa fa-star"></i>#}
+{#                                                                <i class="fa fa-star"></i>#}
+{#                                                                <i class="fa fa-star-o"></i>#}
+{#                                                            </div>#}
+                                                            <div class="product-description">
+                                                                <p>{{ product.description }}</p>
+                                                            </div>
+                                                            <div class="product-price">
+                                                                 <div class="price-box">
+                                                {% if product.discount < 1 %}
+                                                    <span class="price">${{ product.price }}</span>
+                                                {% endif %}
+                                                <span class="regular-price">${{ product.price * product.discount }}</span>
+                                                    </div>
+                                                            </div>
+                                                            <div class="product-list-action">
+                                                               <div class="add-btn">
+                                                                    <a tabindex="0" style="cursor: pointer" onclick='add_to_cart("{{ product.id }}", "{{ product.name }}", "{{ product.imagePaths[0].image_path }}", "{{ product.price }}")'>{{ _('Add To Cart') }}</a>
+                                                                </div>
+{#                                                                <ul>#}
+{#                                                                    <li><a href="#open-modal" data-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>#}
+{#                                                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>#}
+{#                                                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>#}
+{#                                                                </ul>#}
+                                                            </div>
+		                                                </div>
+		                                            </div>
+		                                            <!--Single List Product End-->
+		                                        </div>
+		                                    </div>
+                                            {% endfor %}
+		                                </div>
+		                            </div>
+		                            <!--Pagination Start-->
+		                            <div class="product-pagination">
+		                                <ul>
+                                            {% if pagination.has_prev %}
+                                                <li><a href="javascript:void(0);" onclick="movePage('{{ c }}', {{ pagination.prev_num }})"><i class="fa fa-angle-double-left"></i></a></li>
+                                            {% endif %}
+                                            {% for i in pagination.iter_pages() %}
+                                                {% if i == pagination.page %}
+                                                    <li class="active"><a href="javascript:void(0);" onclick="movePage('{{ c }}', {{ i }})">{{ i }}</a></li>
+                                                {% elif i == None %}
+                                                    <li><a href="javascript:void(0);" onclick="movePage('{{ c }}', {{ i }})">...</a></li>
+                                                {% else %}
+                                                    <li><a href="javascript:void(0);" onclick="movePage('{{ c }}', {{ i }})">{{ i }}</a></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if pagination.has_next %}
+                                                <li><a href="javascript:void(0);" onclick="movePage('{{ c }}', {{ pagination.next_num }})"><i class="fa fa-angle-double-right"></i></a></li>
+                                            {% endif %}
+		                                </ul>
+		                            </div>
+		                            <!--Pagination End-->
+		                        </div>
+		                    </div>
+		                    <!--Shop Product End-->
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		<!--Shop Area End-->
+
+        <form action="{{ url_for('main.shop', c="none") }}" method="post" name="selectForm">
+            <input type="hidden" id="catselect" name="catselect" value="">
+            <input type="hidden" id="priceselect" name="priceselect" value="">
+            <input type="hidden" id="sortselect" name="sortselect" value="">
+            <button type="submit" id="pass" class="btn btn-info" style="display: none">pass</button>
+        </form>
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'blog-base.html' %}
+
+{% block content %}
+		<div id="main" class="content">
+			<div class="container">
+				<article itemscope="itemscope">
+					<div class="posts-list js-posts">
+                        {% for blog in blogs %}
+
+                            {% if blog.imagePaths.count() > 0 %}
+                                <div class="post post-layout-list js-gallery" data-aos="fade-up">
+							        <div class="post-album">
+								        <div class="row content">
+									        <div class="bg" style="background-image: url(../static/img/IMG_0150.jpg);"></div>
+									        <div class="contentext flex-xs-middle">
+										        <div class="album-title">
+											        <a href="{{ url_for('main.blog_detail', p=blog.id) }}">{{ blog.title }}</a>
+										        </div>
+										        <h5 class="review-item-creator"><b>{{ _('Time') }}：</b>{{ blog.timestamp.replace(microsecond=0) }}</h5>
+										        <div class="album-content">
+                                            {{ blog.content }}</div>
+									        </div>
+									        <div class="album-thumb-width flex-xs-middle">
+										        <div class="row album-thumb no-gutter">
+                                                    {% for counter in range(blog.imagePaths.count())  %}
+                                                        <div class="col-xs-4"><img class="thumb" src="{{ blog.imagePaths[counter].image_path }}" /></div>
+                                                    {% endfor %}
+
+										        </div>
+									        </div>
+								        </div>
+							        </div>
+						        </div>
+                            {% else %}
+                                <div class="post post-layout-list" data-aos="fade-up">
+							        <div class="status_list_item icon_kyubo">
+								        <div class="status_user" style="background-image: url(../static/img/b0ce3f3cde0c084b6d42321b2dcbc407.jpeg);">
+									        <div class="status_section">
+										        <a href="{{ url_for('main.blog_detail', p=blog.id) }}" class="status_btn">{{ blog.title }}</a>
+                                                <h5 class="review-item-creator"><b>{{ _('Time') }}：</b>{{ blog.timestamp.replace(microsecond=0) }}</h5>
+										        <p class="section_p">{{ blog.content }}</p>
+									        </div>
+								        </div>
+							        </div>
+						        </div>
+                            {% endif %}
+                        {% endfor %}
+					</div>
+
+					<!-- post-formats end Infinite Scroll star -->
+					<!-- post-formats -->
+					<div class="pagination js-pagination">
+						<div class="js-next pagination__load">
+							<a href=""><i class="iconfont">&#xe605;</i></a>
+						</div>
+					</div>
+					<!-- -pagination  -->
+                </article>
+			</div>
+		</div>
+{% endblock %}

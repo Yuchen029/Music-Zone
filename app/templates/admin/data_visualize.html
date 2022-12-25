@@ -1,0 +1,236 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts-gl.min.js"></script>
+<script src="https://pyecharts.github.io/jupyter-echarts/echarts/echarts-wordcloud.min.js"></script>
+
+
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- Main Body of the visualize page -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>{{ _('Recent Orders') }}</h5>
+                                        </div>
+                                        <div id="chart-border_pie" class="card-block">
+                                            <div id="bar_line" class="chart-container" style="margin-bottom: 20px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>{{ _('Category Order Amount') }}</h5>
+                                        </div>
+                                        <div id="chart-border" class="card-block">
+                                            <div id="bar" class="chart-container" style="margin-bottom: 20px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>{{ _('Category Product Amount') }}</h5>
+                                        </div>
+                                        <div id="chart-border_pie" class="card-block">
+                                            <div id="bar_pie" class="chart-container" style="margin-bottom: 20px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>{{ _('Word Cloud') }}</h5>
+                                        </div>
+                                        <div id="chart-border_pie" class="card-block">
+                                            <div id="bar_map" class="chart-container" style="margin-bottom: 20px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Main Body of the visualize page -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Script for generating 3d bar -->
+<script>
+    let mainContainer = document.getElementById('bar');
+    let cb = document.getElementById('chart-border');
+        // makes chart self-adapting to the window's height and width
+		let resizeMainContainer = function () {
+			const win_w = window.innerWidth;
+            const win_h = window.innerHeight;
+            if (win_w <= 414) {
+                mainContainer.style.width = win_w*0.95+'px';
+			    mainContainer.style.height = win_h*0.2+'px';
+            } else {
+			    mainContainer.style.width = win_w*0.4+'px';
+			    mainContainer.style.height = win_h*0.3+'px';
+            }
+		};
+        // set div container height and width
+		resizeMainContainer();
+    let chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+    $(window).on('resize',function(){//
+        resizeMainContainer();
+        chart.resize();
+    });
+    $(
+        function () {
+            fetchData(chart);
+            setInterval(fetchData, 2000);
+        }
+    );
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "{{ url_for('admin.bar_polar') }}",
+            dataType: 'json',
+            success: function (result) {
+                chart.setOption(result);
+            }
+        });
+    }
+</script>
+
+<!-- Script for generating line chart -->
+<script>
+    let mainContainer_line = document.getElementById('bar_line');
+    let cb_line = document.getElementById('chart-border_pie');
+        // makes chart self-adapting to the window's height and width
+		let resizeMainContainer_line = function () {
+            const win_w = window.innerWidth;
+            const win_h = window.innerHeight;
+            if (win_w <= 414) {
+                mainContainer_line.style.width = win_w*0.95+'px';
+			    mainContainer_line.style.height = win_h*0.2+'px';
+            } else {
+			    mainContainer_line.style.width = win_w*0.35+'px';
+			    mainContainer_line.style.height = win_h*0.3+'px';
+            }
+		};
+        // set div container height and width
+		resizeMainContainer_line();
+    let chart_line = echarts.init(document.getElementById('bar_line'), 'white', {renderer: 'canvas'});
+    $(window).on('resize',function(){//
+        resizeMainContainer_line();
+        chart_line.resize();
+    });
+    $(
+        function () {
+            fetchDataLine(chart_line);
+            setInterval(fetchData, 2000);
+        }
+    );
+
+    function fetchDataLine() {
+        $.ajax({
+            type: "GET",
+            url: "{{ url_for('admin.bar_line') }}",
+            dataType: 'json',
+            success: function (result) {
+                chart_line.setOption(result);
+            }
+        });
+    }
+</script>
+
+<!-- Script for generating pie chart -->
+<script>
+    let mainContainer_pie = document.getElementById('bar_pie');
+    let cb_pie = document.getElementById('chart-border_pie');
+        // makes chart self-adapting to the window's height and width
+		let resizeMainContainer_pie = function () {
+            const win_w = window.innerWidth;
+            const win_h = window.innerHeight;
+            if (win_w <= 414) {
+                mainContainer_pie.style.width = win_w*0.95+'px';
+			    mainContainer_pie.style.height = win_h*0.2+'px';
+            } else {
+			    mainContainer_pie.style.width = win_w*0.4+'px';
+			    mainContainer_pie.style.height = win_h*0.3+'px';
+            }
+		};
+        // set div container height and width
+		resizeMainContainer_pie();
+    let chart_pie = echarts.init(document.getElementById('bar_pie'), 'white', {renderer: 'canvas'});
+    $(window).on('resize',function(){//
+        resizeMainContainer_pie();
+        chart_pie.resize();
+    });
+    $(
+        function () {
+            fetchDataPie(chart_pie);
+            setInterval(fetchData, 2000);
+        }
+    );
+
+    function fetchDataPie() {
+        $.ajax({
+            type: "GET",
+            url: "{{ url_for('admin.bar_pie') }}",
+            dataType: 'json',
+            success: function (result) {
+                chart_pie.setOption(result);
+            }
+        });
+    }
+</script>
+
+<!-- Script for generating map chart -->
+<script>
+    let mainContainer_map = document.getElementById('bar_map');
+    let cb_map = document.getElementById('chart-border_pie');
+        // makes chart self-adapting to the window's height and width
+		let resizeMainContainer_map = function () {
+            const win_w = window.innerWidth;
+            const win_h = window.innerHeight;
+            if (win_w <= 414) {
+                mainContainer_map.style.width = win_w*0.95+'px';
+			    mainContainer_map.style.height = win_h*0.2+'px';
+            } else {
+			    mainContainer_map.style.width = win_w*0.4+'px';
+			    mainContainer_map.style.height = win_h*0.3+'px';
+            }
+		};
+        // set div container height and width
+		resizeMainContainer_map();
+    let chart_map = echarts.init(document.getElementById('bar_map'), 'white', {renderer: 'canvas'});
+    $(window).on('resize',function(){//
+        resizeMainContainer_map();
+        chart_map.resize();
+    });
+    $(
+        function () {
+            fetchDataMap(chart_map);
+            setInterval(fetchData, 2000);
+        }
+    );
+
+    function fetchDataMap() {
+        $.ajax({
+            type: "GET",
+            url: "{{ url_for('admin.bar_map') }}",
+            dataType: 'json',
+            success: function (result) {
+                chart_map.setOption(result);
+            }
+        });
+    }
+</script>
+
+{% endblock %}

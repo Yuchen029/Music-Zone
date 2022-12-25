@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--Breadcrumb Tow Start-->
+<div class="breadcrumb-tow mb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-title">
+                    <h1>Add Delivery Information</h1>
+                </div>
+                <div class="breadcrumb-content breadcrumb-content-tow">
+                    <ul>
+                        <li><a href="{{ url_for('main.index') }}">Home</a></li>
+                        <li class="active">My Delivery Info</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Breadcrumb Tow End-->
+<div style="padding-left: 20%; padding-right: 20%">
+    <h3>Delivery Detail</h3>
+    <div class="login">
+        <div class="login-form-container">
+            <div class="account-login-form">
+                <form name="addForm" action="{{ url_for('main.add_delivery_info', user_id=current_user.id) }}" method="post" onsubmit="return addValidate()">
+                    <label>Name</label>
+                    <input name="name" type="text" value="">
+                    <label>Gender</label>
+                    <div class="input-radio">
+                        <span class="custom-radio"><input name="gender" value="1" type="radio" > Male </span>
+                        <span class="custom-radio"><input name="gender" value="2" type="radio"> Female </span>
+                        <span class="custom-radio"><input name="gender" value="3" type="radio"> Unknown </span>
+                    </div>
+                    <label>Phone Number</label>
+                    <input name="phone" type="text" value="">
+                    <label>Country/Region</label>
+                    <input name="country" type="text" value="">
+                    <label>City</label>
+                    <input name="city" type="text" value="">
+                    <label>Street</label>
+                    <input name="street" type="text" value="">
+                    <label>Detail</label>
+                    <input name="detail" type="text" placeholder="building/unit information..."
+                        value="">
+                    <div class="button-box">
+                        <button type="submit" class="default-btn">save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addValidate() {
+        const name = addForm.name.value;
+        const gender = addForm.gender.value;
+        const phone = addForm.phone.value;
+        const country = addForm.country.value;
+        const city = addForm.city.value;
+        const street = addForm.street.value;
+        const detail = addForm.detail.value;
+        if (!name || !gender || !phone || !country || !city || !street || !detail) {
+            alert('Please fill all the form attributes!');
+            return false;
+        }
+        if (!(/(^[1-9]\d*$)/.test(phone))) {
+            alert('The phone number should be in digits!');
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}

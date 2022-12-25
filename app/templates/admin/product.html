@@ -1,0 +1,294 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <!-- [ breadcrumb ] end -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
+                            <!--[ Recent Users ] start-->
+                            <div class="col-sm-12">
+                                <div class="card Recent-Users">
+                                    <div class="card-header">
+                                        <h5>{{ _('Product Management') }}</h5>
+                                        <a data-bs-toggle="modal" data-bs-target="#addModal" class="feather icon-plus-square" style="float:right;"> {{ _('ADD') }}</a>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" role="tabpanel" aria-labelledby="home-tab">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>{{ _('Name') }}</th>
+                                                    <th>{{ _('Weight') }}(kg)</th>
+                                                    <th>{{ _('Price') }}($)</th>
+                                                    <th>{{ _('Discount') }}</th>
+                                                    <th>{{ _('Inventory') }}</th>
+                                                    <th class="text-center">{{ _('Operation') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for product in products %}
+                                                <tr>
+                                                    <td>
+                                                        <h6 class="m-0">{{ product.id }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="{{ product.imagePaths[0].image_path }}" alt="activity-user">{{ product.name }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ product.weight }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ product.price }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ product.discount }}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="m-0">{{ product.inventory }}</h6>
+                                                    </td>
+                                                    <td class="text-center">
+{#                                                        <a href="{{ url_for('admin.modify_product', product_id=product.id) }}" class="label theme-bg2 text-white f-12">Modify</a>#}
+                                                        <a href="{{ url_for('admin.modify_product', product_id=product.id) }}" class="feather icon-info theme-bg3" style="cursor: pointer"></a>
+                                                        <a data-bs-toggle="modal" data-bs-target="#removeModal" onclick="Values_id({{ product.id }})" class="feather icon-trash-2 theme-bg4" style="cursor: pointer"></a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="pagination justify-content-center">{{ pagination.links }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--[ Recent Users ] end-->
+                        </div>
+                        <!-- [ Main Content ] end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content ] end -->
+
+<!-- Add Modal Start -->
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{ _('Add New Product') }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('admin.add_product') }}" method="post" name="addForm" onsubmit="return addValidate()" enctype="multipart/form-data">
+                <!-- Content -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{ _('Name') }}</label>
+                        <input name="name" class="form-control" placeholder={{ _('Name') }}>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ _('Description') }}</label>
+                        <input name="description" class="form-control" placeholder="Description">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ _('Price') }}</label>
+                        <input name="price" class="form-control" placeholder="Price">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ _('Discount') }}</label>
+                        <input name="discount" class="form-control" placeholder="Discount">
+                    </div>
+                    <div class="form-group">
+                        <label>{{ _('Inventory') }}</label>
+                        <input name="inventory" class="form-control" placeholder="Inventory">
+                    </div>
+                    <div class="form-group" style="margin-top: 40px">
+                        <div class="row" style="text-align: center">
+                            <span class="col-4 col-sm-4 col-md-4">
+                                <label id="fake_upload1" style="width: 80%; border: 1px solid #ffffff; background: #f4f7fa;
+                                padding: 15px; border-radius: 6px;">{{ _('Upload Image') }}</label>
+                                <input type="file" onchange="showImg()" id="img_file" name="image" style="display: none">
+                            </span>
+                            <span class="col-4 col-sm-4 col-md-4">
+                                <label id="fake_upload2" style="width: 80%; border: 1px solid #ffffff; background: #f4f7fa;
+                                padding: 15px; border-radius: 6px;">{{ _('Upload Image') }}</label>
+                                <input type="file" onchange="showImg2()" id="img_file2" name="image2" style="display: none">
+                            </span>
+                            <span class="col-4 col-sm-4 col-md-4">
+                                <label id="fake_upload3" style="width: 80%; border: 1px solid #ffffff; background: #f4f7fa;
+                                padding: 15px; border-radius: 6px;">{{ _('Upload Image') }}</label>
+                                <input type="file" onchange="showImg3()" id="img_file3" name="image3" style="display: none">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" style="text-align: center;">
+                        <div class="col-4 col-sm-4 col-md-4">
+                            <img src="" id="img_id" alt="" style="width: 80%">
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-4">
+                            <img src="" id="img_id2" alt="" style="width: 80%">
+                        </div>
+                        <div class="col-4 col-sm-4 col-md-4">
+                            <img src="" id="img_id3" alt="" style="width: 80%">
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">{{ _('Confirm') }}</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Modal End -->
+
+<!-- Remove Modal Start -->
+<div class="modal fade" id="removeModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{ _('Remove Product') }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('admin.remove_product') }}" method="post" name="removeForm" onsubmit="return removeValidate()">
+                <!-- Content -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{ _('Confirm Delete') }}</label>
+                        <input name="confirm" class="form-control" placeholder="Please input yes to confirm your remove">
+                    </div>
+                    <input type="hidden" id="remove_id" name="remove_id" value="">
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">{{ _('Confirm') }}</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Remove Modal End -->
+
+<script src="../../static/plugins/jquery/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function (){
+        $('#fake_upload1').on('click', function (){
+            $('#img_file').click();
+        })
+        $('#fake_upload2').on('click', function (){
+            $('#img_file2').click();
+        })
+        $('#fake_upload3').on('click', function (){
+            $('#img_file3').click();
+        })
+    })
+
+    function addValidate() {
+        const reg_discount = /^\d+(\.\d+)?$/; /* non-negative float */
+        const reg_digit = /^[0-9]*$/; /* non-negative float */
+        if (!addForm.name.value) {
+            alert('name should not be empty');
+            addForm.name.focus();
+            return false;
+        }
+        if (!addForm.description.value) {
+            alert('Description should not be empty');
+            addForm.description.focus();
+            return false;
+        }
+        if (!addForm.price.value || !reg_digit.test(addForm.price.value)) {
+            alert('Price should be a digit');
+            addForm.price.focus();
+            return false;
+        }
+        if (!reg_discount.test(addForm.discount.value)) {
+            alert('Discount should be a non-negative float');
+            addForm.discount.focus();
+            return false;
+        }
+        if (!addForm.inventory.value || !reg_digit.test(addForm.inventory.value)) {
+            alert('Inventory should be a digit');
+            addForm.inventory.focus();
+            return false;
+        }
+        const f = document.getElementById("img_file").value;
+        const f2 = document.getElementById("img_file2").value;
+        const f3 = document.getElementById("img_file3").value;
+        if (f === "" && f2 === "" && f3 === "") {
+            alert('You should at least upload one product image');
+            return false;
+        }
+        if ((f !== "" && !/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(f))
+            || (f2 !== "" && !/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(f2))
+            || (f3 !== "" && !/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(f3))) {
+            alert('You can only upload image in below formats:\ngif, jpg, jpeg, png, GIF, JPG, PNG' );
+            return false;
+        }
+        return true;
+    }
+
+    function removeValidate() {
+        if (removeForm.confirm.value!=='yes') {
+            alert('You did not input yes, right?')
+            return false;
+        }
+        return true;
+    }
+
+    function Values_id(ID) {
+        return $("#remove_id").val(ID);
+    }
+
+    function showImg(){
+        <!--Find user uploaded photos with Id and save the address as 'file'-->
+        const file = document.getElementById('img_file').files[0];
+        <!--Read the image by reading the URL address of image-->
+        const re = new FileReader();
+        re.readAsDataURL(file);
+        <!--Change the attribution of image-->
+        <!--Returns the target node of the event (the node that triggered the event), in this case uploading a photo-->
+        re.onload = function(re){
+            $('#img_id').attr("src", re.target.result);
+        }
+    }
+
+    function showImg2(){
+        <!--Find user uploaded photos with Id and save the address as 'file'-->
+        const file = document.getElementById('img_file2').files[0];
+        <!--Read the image by reading the URL address of image-->
+        const re = new FileReader();
+        re.readAsDataURL(file);
+        <!--Change the attribution of image-->
+        <!--Returns the target node of the event (the node that triggered the event), in this case uploading a photo-->
+        re.onload = function(re){
+            $('#img_id2').attr("src", re.target.result);
+        }
+    }
+
+    function showImg3(){
+        <!--Find user uploaded photos with Id and save the address as 'file'-->
+        const file = document.getElementById('img_file3').files[0];
+        <!--Read the image by reading the URL address of image-->
+        const re = new FileReader();
+        re.readAsDataURL(file);
+        <!--Change the attribution of image-->
+        <!--Returns the target node of the event (the node that triggered the event), in this case uploading a photo-->
+        re.onload = function(re){
+            $('#img_id3').attr("src", re.target.result);
+        }
+    }
+</script>
+{% endblock %}

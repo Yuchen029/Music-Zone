@@ -1,0 +1,187 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ _('About Us') }}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<!--Header Area End-->
+<!--Breadcrumb Tow Start-->
+<div class="breadcrumb-tow">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-title">
+                    <h1>{{ _('About Us') }}</h1>
+                </div>
+                <div class="breadcrumb-content breadcrumb-content-tow">
+                    <ul>
+                        <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+                        <li class="active">{{ _('About Us') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Breadcrumb Tow End-->
+<!--About Us Area Start-->
+<div class="about-us-area">
+    <div class="container-fluid p-0">
+        <div class="row no-gutters">
+            <div class="col-md-12 col-lg-6">
+                <div class="about-us-img img-full">
+                    <img src="../static/storage/background/about1.jpg" alt="" style="width: 100%; height: auto">
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="about-us-content">
+                    <h2>{{ _('OUR COMPANY') }}</h2>
+                        <p><strong>{{ _('MUSICAL INSTRUMENT SHOP') }} ({{ _('MUSIC ZONE') }})</strong> {{ _('was founded in 1993 by the BECKER family in Dublin, Ireland, and is a family-owned musical instrument sales business. All of its business have been walk-in retail customers, and the company now wanted to expand into the online market.') }}<br/>
+                            <br>
+                            {{ _('Since its establishment, the company has always been in pursuit of excellent quality, providing sincere service as the purpose, and hoping that every local people can enjoy the fun brought by music.') }}<br/>
+                            <br>
+                            {{ _('The main products are piano, violin, guitar, and other more than ten varieties and ancillary services, selling well in Dublin.') }}</p>
+                        <a href="{{ url_for('main.shop', c="all") }}" class="about-btn">{{ _('view work') }} </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--About Us Area End-->
+<!--Fun Factor Area Start-->
+<div class="fun-factor-area">
+    <div class="container-fluid p-0">
+        <div class="row no-gutters">
+            <!--Single Fun Factor Start-->
+            <div class="col-lg-3 col-md-6">
+                <div class="fun-factor-wrap">
+                    <div class="fun-factor-icon">
+                        <img src="../static/img/icon/fun-fact1.png" alt="">
+                    </div>
+                    <div class="fun-facttor-content">
+                        <div class="fun-facttor-number">
+                            <h2><span class="counter">2169</span></h2>
+                        </div>
+                        <div class="fun-facttor-title">
+                            <h5>{{ _('happy customers') }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Single Fun Factor End-->
+            <!--Single Fun Factor Start-->
+            <div class="col-lg-3 col-md-6">
+                <div class="fun-factor-wrap">
+                    <div class="fun-factor-icon">
+                        <img src="../static/img/icon/fun-fact2.png" alt="">
+                    </div>
+                    <div class="fun-facttor-content">
+                        <div class="fun-facttor-number">
+                            <h2><span class="counter">869</span></h2>
+                        </div>
+                        <div class="fun-facttor-title">
+                            <h5>{{ _('AWARDS WINNED') }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Single Fun Factor End-->
+            <!--Single Fun Factor Start-->
+            <div class="col-lg-3 col-md-6">
+                <div class="fun-factor-wrap">
+                    <div class="fun-factor-icon">
+                        <img src="../static/img/icon/fun-fact3.png" alt="">
+                    </div>
+                    <div class="fun-facttor-content">
+                        <div class="fun-facttor-number">
+                            <h2><span class="counter">689</span></h2>
+                        </div>
+                        <div class="fun-facttor-title">
+                            <h5>{{ _('Efficient after-sales') }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Single Fun Factor End-->
+            <!--Single Fun Factor Start-->
+            <div class="col-lg-3 col-md-6">
+                <div class="fun-factor-wrap">
+                    <div class="fun-factor-icon">
+                        <img src="../static/img/icon/fun-fact4.png" alt="">
+                    </div>
+                    <div class="fun-facttor-content">
+                        <div class="fun-facttor-number">
+                            <h2><span class="counter">2169</span></h2>
+                        </div>
+                        <div class="fun-facttor-title">
+                            <h5>{{ _('instruments sold') }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Single Fun Factor End-->
+        </div>
+    </div>
+</div>
+<!--Fun Factor Area End-->
+<!--Skill Area Start-->
+<div class="skill-area mb-110">
+    <div class="container-fluid p-0">
+        <div class="row no-gutters">
+            <div class="col-md-12 col-lg-6">
+                <div class="skrill-here">
+                    <h2>{{ _('WE HAVE SKILLS TO SHOW') }}</h2>
+                    <div class="ht-single-about">
+                        <div class="skill-bar">
+                            <div class="skill-bar-item">
+                                <span>{{ _('Fast delivery') }}</span>
+                                <div class="progress">
+                                    <div class="progress-bar" data-progress="100%" style="width: 100%;">
+                                        <span class="text-top">100%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-bar-item">
+                                <span>{{ _('friendly attitude') }}</span>
+                                <div class="progress">
+                                    <div class="progress-bar" data-progress="100%" style="width: 100%;">
+                                        <span class="text-top">100%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-bar-item">
+                                <span>{{ _('quality instrument') }}</span>
+                                <div class="progress">
+                                    <div class="progress-bar" data-progress="100%" style="width: 100%;">
+                                        <span class="text-top">100%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-bar-item">
+                                <span>{{ _('good after-sales service') }}</span>
+                                <div class="progress">
+                                    <div class="progress-bar" data-progress="100%" style="width: 100%;">
+                                        <span class="text-top">100%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="skill-img img-full">
+                    <img src="../static/storage/background/about2.jpg" alt="" style="width: 100%; height: auto">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Skill Area End-->
+{% endblock %}
+</body>
+</html>

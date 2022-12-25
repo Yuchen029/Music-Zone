@@ -1,0 +1,71 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <!-- [ breadcrumb ] end -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
+                            <!--[ Recent Users ] start-->
+                            <div class="col-sm-12">
+                                <div class="card Recent-Users">
+                                    <div class="card-header">
+                                        <h5>{{ _('User Management') }}</h5>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" role="tabpanel" aria-labelledby="home-tab">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>{{ _('User') }}</th>
+                                                    <th>{{ _('Email') }}</th>
+                                                    <th>{{ _('Last Time') }}</th>
+{#                                                    <th class="text-center">Operation</th>#}
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for user in users %}
+                                                    <tr>
+                                                        <td>
+                                                            <h6 class="m-0">{{ user.id }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="{{ user.avatar_path }}" alt="activity-user">{{ user.username }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0">{{ user.email }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0">{{ user.last_seen }}</h6>
+                                                        </td>
+{#                                                        <td class="text-center">#}
+{#                                                            <a href="#" class="feather icon-info theme-bg3" style="cursor: pointer"></a>#}
+{#                                                            <a href="#" class="feather icon-trash-2 theme-bg4" style="cursor: pointer"></a>#}
+{#                                                        </td>#}
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--[ Recent Users ] end-->
+                        </div>
+                        <!-- [ Main Content ] end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock %}

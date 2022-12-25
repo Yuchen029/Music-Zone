@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+
+{% block head %}
+<script>
+    function submitForm() {
+        return confirm("Are you sure to change?");
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <!-- [ breadcrumb ] end -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
+                            <!--[ Recent Users ] start-->
+                            <div class="col-sm-12">
+                                <div class="card Recent-Users">
+                                    <div class="card-header">
+                                        <h5>{{ _('Pandemic Management') }}</h5>
+                                    </div>
+                                    <div class="tab-content">
+                                        <h5>{{ _('Offline Store Status: ') }} {{ status }}</h5>
+                                        <form action="{{ url_for('admin.pandemic') }}" method="post" onsubmit="return submitForm()" name="change_store_status" id="change_store_status" style="padding-top: 30px">
+                                            {% if pandemic.is_pandemic %}
+                                                <button type="submit" class="btn btn-primary">{{ _('Open') }}</button>
+                                            {% else %}
+                                                <button type="submit" class="btn btn-primary">{{ _('Close') }}</button>
+                                            {% endif %}
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--[ Recent Users ] end-->
+                        </div>
+                        <!-- [ Main Content ] end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock %}

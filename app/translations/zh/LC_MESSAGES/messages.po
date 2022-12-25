@@ -1,0 +1,1323 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-06-02 00:15+0800\n"
+"PO-Revision-Date: 2022-04-12 16:36+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: app/admin/views.py:46 app/templates/admin/category.html:86
+#: app/templates/admin/category.html:115 app/templates/admin/category.html:144
+#: app/templates/admin/pandemic.html:35 app/templates/admin/product.html:148
+#: app/templates/admin/product.html:177
+#: app/templates/admin/product_modify.html:141
+#: app/templates/my-account.html:158 app/templates/order.html:170
+msgid "Close"
+msgstr "关闭"
+
+#: app/admin/views.py:48 app/templates/admin/pandemic.html:33
+msgid "Open"
+msgstr "开放"
+
+#: app/auth/forms.py:13
+msgid "Keep me signed in "
+msgstr "保持登陆"
+
+#: app/auth/forms.py:14
+msgid "Sign in"
+msgstr "登陆"
+
+#: app/auth/forms.py:26
+msgid "Sign up"
+msgstr "注册"
+
+#: app/auth/forms.py:42 app/auth/forms.py:48
+msgid "Reset My Password"
+msgstr "重置密码"
+
+#: app/templates/about.html:5 app/templates/about.html:18
+#: app/templates/about.html:23 app/templates/base.html:179
+#: app/templates/base.html:264 app/templates/base.html:282
+msgid "About Us"
+msgstr "关于我们"
+
+#: app/templates/about.html:22 app/templates/auth/login.html:26
+#: app/templates/auth/register.html:21
+#: app/templates/auth/reset_password_application.html:21
+#: app/templates/auth/reset_password_execution.html:21
+#: app/templates/base.html:99 app/templates/cart.html:21
+#: app/templates/checkout.html:21 app/templates/contact.html:13
+#: app/templates/my-account.html:21 app/templates/order.html:21
+#: app/templates/portfolio.html:22 app/templates/shop.html:245
+#: app/templates/single-product.html:29
+msgid "Home"
+msgstr "主页"
+
+#: app/templates/about.html:42
+msgid "OUR COMPANY"
+msgstr "我们的公司"
+
+#: app/templates/about.html:43
+msgid "MUSICAL INSTRUMENT SHOP"
+msgstr "乐器商店"
+
+#: app/templates/about.html:43
+msgid "MUSIC ZONE"
+msgstr "音乐地带"
+
+#: app/templates/about.html:43
+msgid ""
+"was founded in 1993 by the BECKER family in Dublin, Ireland, and is a "
+"family-owned musical instrument sales business. All of its business have "
+"been walk-in retail customers, and the company now wanted to expand into "
+"the online market."
+msgstr "我们是一个家族所有的乐器经销商，于1993年由爱尔兰都柏林Becker家族成立。之前，我们只有进店选购的商业模式，而现在我们想要扩展在线市场"
+
+#: app/templates/about.html:45 app/templates/index-3.html:75
+msgid ""
+"Since its establishment, the company has always been in pursuit of "
+"excellent quality, providing sincere service as the purpose, and hoping "
+"that every local people can enjoy the fun brought by music."
+msgstr "自从我们建立，公司一直追求着'超高品质、提供真诚服务以及希望每一个顾客都能享受到音乐带来到快乐'"
+
+#: app/templates/about.html:47
+msgid ""
+"The main products are piano, violin, guitar, and other more than ten "
+"varieties and ancillary services, selling well in Dublin."
+msgstr "公司主营商品有钢琴、小提琴、吉他以及其他数十种乐器和额外服务，在都柏林有良好销量"
+
+#: app/templates/about.html:48
+msgid "view work"
+msgstr "查看工作"
+
+#: app/templates/about.html:70
+msgid "happy customers"
+msgstr "顾客"
+
+#: app/templates/about.html:87
+msgid "AWARDS WINNED"
+msgstr "获得奖项"
+
+#: app/templates/about.html:104
+msgid "Efficient after-sales"
+msgstr "售后效率"
+
+#: app/templates/about.html:121
+msgid "instruments sold"
+msgstr "乐器一览"
+
+#: app/templates/about.html:137
+msgid "WE HAVE SKILLS TO SHOW"
+msgstr "我们要向您展示"
+
+#: app/templates/about.html:141
+msgid "Fast delivery"
+msgstr "快速的配送"
+
+#: app/templates/about.html:149
+msgid "friendly attitude"
+msgstr "友善的态度"
+
+#: app/templates/about.html:157
+msgid "quality instrument"
+msgstr "高品质乐器"
+
+#: app/templates/about.html:165
+msgid "good after-sales service"
+msgstr "优秀售后服务"
+
+#: app/templates/admin/base.html:54 app/templates/admin/live.html:11
+#: app/templates/base.html:6 app/templates/blog-base.html:75
+#: app/templates/index-3.html:9 app/templates/single-product.html:318
+msgid "Music Zone"
+msgstr "音乐地带"
+
+#: app/templates/base.html:100 app/templates/shop.html:246
+msgid "Shop"
+msgstr "购物"
+
+#: app/templates/base.html:114 app/templates/base.html:140
+msgid "Your Cart"
+msgstr "你的购物车"
+
+#: app/templates/base.html:131 app/templates/cart.html:90
+msgid "Subtotal"
+msgstr "小记"
+
+#: app/templates/base.html:134
+msgid "View all"
+msgstr "查看所有"
+
+#: app/templates/base.html:167 app/templates/base.html:172
+msgid "Profile"
+msgstr "资料"
+
+#: app/templates/base.html:176 app/templates/cart.html:17
+#: app/templates/cart.html:22
+msgid "Shopping Cart"
+msgstr "购物车"
+
+#: app/templates/base.html:177 app/templates/portfolio.html:18
+#: app/templates/portfolio.html:23
+msgid "Portfolio"
+msgstr "照片集"
+
+#: app/templates/base.html:178 app/templates/blog-base.html:7
+#: app/templates/blog-base.html:75
+msgid "Blog"
+msgstr "博客"
+
+#: app/templates/base.html:182 app/templates/my-account.html:42
+msgid "Log Out"
+msgstr "注销"
+
+#: app/templates/base.html:184
+msgid "Log In"
+msgstr "登陆"
+
+#: app/templates/base.html:189
+msgid "Language"
+msgstr "语言"
+
+#: app/templates/base.html:261 app/templates/my-account.html:17
+#: app/templates/my-account.html:22
+msgid "My Account"
+msgstr "我的账户"
+
+#: app/templates/base.html:265
+msgid "Team Member"
+msgstr "团队成员"
+
+#: app/templates/base.html:266
+msgid "Career"
+msgstr "职业"
+
+#: app/templates/base.html:267
+msgid "Specials"
+msgstr "种类"
+
+#: app/templates/base.html:268
+msgid "Best sellers"
+msgstr "最畅销商品"
+
+#: app/templates/base.html:269
+msgid "Our stores"
+msgstr "商店"
+
+#: app/templates/base.html:270 app/templates/base.html:283
+msgid "Contact us"
+msgstr "联系我们"
+
+#: app/templates/base.html:279 app/templates/order.html:52
+msgid "Information"
+msgstr "信息"
+
+#: app/templates/base.html:284
+msgid "My orders"
+msgstr "我的订单"
+
+#: app/templates/base.html:285
+msgid "Terms & Conditions"
+msgstr "条款"
+
+#: app/templates/base.html:286
+msgid "Returns & Exchanges"
+msgstr "退换货"
+
+#: app/templates/base.html:287
+msgid "Shipping & Delivery"
+msgstr "物流"
+
+#: app/templates/base.html:288 app/templates/base.html:303
+msgid "Privacy Policy"
+msgstr "隐私政策"
+
+#: app/templates/base.html:297
+msgid "Quick Links"
+msgstr "快速链接"
+
+#: app/templates/base.html:300
+msgid "Support Center"
+msgstr "支持"
+
+#: app/templates/base.html:301
+msgid "Term & Conditions"
+msgstr "条款"
+
+#: app/templates/base.html:302 app/templates/cart.html:91
+#: app/templates/checkout.html:75
+msgid "Shipping"
+msgstr "物流"
+
+#: app/templates/base.html:304
+msgid "Help"
+msgstr "帮助"
+
+#: app/templates/base.html:305
+msgid "Products Return"
+msgstr "产品退回"
+
+#: app/templates/base.html:306
+msgid "FAQS"
+msgstr "常见问题"
+
+#: app/templates/base.html:315 app/templates/single-product.html:158
+msgid "Categories"
+msgstr "类别"
+
+#: app/templates/base.html:355
+msgid "Address : 100 Pingleyuan, Chaoyang District, Beijing 100124, China."
+msgstr "地址：中国北京市朝阳区平乐园100号"
+
+#: app/templates/admin/index.html:28 app/templates/auth/login.html:56
+#: app/templates/auth/register.html:51
+#: app/templates/auth/reset_password_application.html:50
+#: app/templates/base.html:367
+msgid "Email"
+msgstr "电子邮箱"
+
+#: app/templates/admin/order_modify.html:31 app/templates/base.html:379
+#: app/templates/my-account.html:74
+msgid "Phone"
+msgstr "电话"
+
+#: app/templates/base.html:402
+msgid "Site Map"
+msgstr "经销地点"
+
+#: app/templates/base.html:403
+msgid "Search Terms"
+msgstr "搜索条款"
+
+#: app/templates/base.html:404
+msgid "Advanced Search"
+msgstr "高级搜索"
+
+#: app/templates/base.html:405
+msgid "Orders and Returns"
+msgstr "订单和退货"
+
+#: app/templates/base.html:406 app/templates/contact.html:9
+#: app/templates/contact.html:14
+msgid "Contact Us"
+msgstr "联系我们"
+
+#: app/templates/base.html:413
+msgid "Copyright"
+msgstr "版权"
+
+#: app/templates/base.html:413
+msgid "All Rights Reserved"
+msgstr "所有"
+
+#: app/templates/blog-add.html:69 app/templates/blog-base.html:49
+msgid "Add Blog"
+msgstr "添加博客"
+
+#: app/templates/blog-add.html:73
+msgid "Maximum 5 images, all images are below text"
+msgstr "最多五张图片，所有的图片都在文字之下"
+
+#: app/templates/blog-add.html:76
+msgid "Title"
+msgstr "标题"
+
+#: app/templates/admin/product.html:99
+#: app/templates/admin/product_modify.html:81 app/templates/blog-add.html:81
+#: app/templates/single-product.html:182
+msgid "Description"
+msgstr "详情"
+
+#: app/templates/blog-add.html:82
+msgid "Enter description here"
+msgstr "输入博客内容"
+
+#: app/templates/blog-add.html:86 app/templates/blog-add.html:90
+#: app/templates/blog-add.html:94 app/templates/blog-add.html:98
+#: app/templates/blog-add.html:102
+msgid "Image"
+msgstr "图片"
+
+#: app/templates/blog-add.html:106 app/templates/gustbook.html:136
+msgid "Post"
+msgstr "发布"
+
+#: app/templates/blog-base.html:43
+msgid "Shop Index"
+msgstr "商城主页"
+
+#: app/templates/blog-base.html:46
+msgid "Blog Index"
+msgstr "博客主页"
+
+#: app/templates/blog-base.html:52 app/templates/update.html:17
+msgid "Update"
+msgstr "更新"
+
+#: app/templates/blog-base.html:55 app/templates/gustbook.html:46
+msgid "Guest Book"
+msgstr "留言簿"
+
+#: app/templates/blog-index.html:19 app/templates/blog-index.html:40
+msgid "Time"
+msgstr "时间"
+
+#: app/templates/cart.html:40
+msgid "select"
+msgstr "选择"
+
+#: app/templates/cart.html:41
+msgid "images"
+msgstr "图片"
+
+#: app/templates/admin/base.html:83 app/templates/admin/order_modify.html:54
+#: app/templates/cart.html:42 app/templates/checkout.html:60
+#: app/templates/order.html:98
+msgid "Product"
+msgstr "商品"
+
+#: app/templates/cart.html:43
+msgid "Unit Price"
+msgstr "单价"
+
+#: app/templates/admin/product.html:31 app/templates/admin/product.html:107
+#: app/templates/admin/product_modify.html:71 app/templates/cart.html:44
+msgid "Discount"
+msgstr "折扣"
+
+#: app/templates/cart.html:45 app/templates/order.html:99
+msgid "Quantity"
+msgstr "数量"
+
+#: app/templates/cart.html:46 app/templates/cart.html:92
+#: app/templates/checkout.html:61
+msgid "Total"
+msgstr "总和"
+
+#: app/templates/cart.html:47
+msgid "remove"
+msgstr "去除"
+
+#: app/templates/cart.html:88
+msgid "Cart totals"
+msgstr "购物车总计"
+
+#: app/templates/cart.html:94
+msgid "Proceed to checkout"
+msgstr "去结算"
+
+#: app/templates/checkout.html:17 app/templates/checkout.html:22
+msgid "Checkout"
+msgstr "结算"
+
+#: app/templates/checkout.html:55
+msgid "Your"
+msgstr "你的"
+
+#: app/templates/checkout.html:55
+msgid "order"
+msgstr "订单"
+
+#: app/templates/checkout.html:79
+msgid "Order Total"
+msgstr "订单总计"
+
+#: app/templates/checkout.html:91
+msgid "Shipping Info"
+msgstr "物流"
+
+#: app/templates/checkout.html:101
+msgid "Delivery Selection"
+msgstr "物流选择"
+
+#: app/templates/checkout.html:110
+msgid "Sorry. Due to the pandemic, pick-up choice is unavailable now"
+msgstr "对不起。由于疫情原因，自提选择暂不可用"
+
+#: app/templates/checkout.html:117
+msgid "PICK UP"
+msgstr "自提"
+
+#: app/templates/admin/order_modify.html:34 app/templates/checkout.html:130
+#: app/templates/checkout.html:144 app/templates/my-account.html:75
+#: app/templates/order.html:81
+msgid "Address"
+msgstr "地址"
+
+#: app/templates/checkout.html:137 app/templates/checkout.html:139
+#: app/templates/checkout.html:141 app/templates/my-account.html:72
+msgid "Customer"
+msgstr "顾客"
+
+#: app/templates/checkout.html:137
+msgid "Gentleman"
+msgstr "男士"
+
+#: app/templates/checkout.html:139
+msgid "Lady"
+msgstr "女士"
+
+#: app/templates/checkout.html:141 app/templates/my-account.html:89
+msgid "Unknown"
+msgstr ""
+
+#: app/templates/checkout.html:143 app/templates/order.html:70
+#: app/templates/order.html:141
+msgid "Phone Number"
+msgstr "电话号码"
+
+#: app/templates/checkout.html:153
+msgid "View or Edit"
+msgstr "查看或修改"
+
+#: app/templates/checkout.html:158
+msgid "Order Notes"
+msgstr "订单细节"
+
+#: app/templates/checkout.html:159
+msgid "Please mention what you care about."
+msgstr "请告诉我们有关心的"
+
+#: app/templates/checkout.html:169
+msgid "Place Order"
+msgstr "下订单"
+
+#: app/templates/contact.html:33
+msgid "TELL US YOUR PROJECT"
+msgstr "告诉我们你的项目"
+
+#: app/templates/contact.html:59
+msgid "Send Email"
+msgstr "发送电子邮件"
+
+#: app/templates/contact.html:69
+msgid "CONTACT US"
+msgstr "联系我们"
+
+#: app/templates/gustbook.html:51
+msgid "Share"
+msgstr "分享"
+
+#: app/templates/gustbook.html:53
+msgid "Fold Comment"
+msgstr "折叠评论"
+
+#: app/templates/gustbook.html:82
+msgid "Comments"
+msgstr "评论"
+
+#: app/templates/gustbook.html:135
+msgid "We want your real feeling about this website"
+msgstr "我们想要你的真实感受"
+
+#: app/templates/index-3.html:12
+msgid "Music Instruments Collection"
+msgstr "乐器一览"
+
+#: app/templates/index-3.html:26
+msgid "FREE SHIPPING"
+msgstr "免运费"
+
+#: app/templates/index-3.html:27
+msgid "ALL ORDER OVER $100"
+msgstr "所有超过$100的订单"
+
+#: app/templates/index-3.html:39
+msgid "DEDICATED SUPPORT"
+msgstr "专门服务"
+
+#: app/templates/index-3.html:52
+msgid "MONEY BACK"
+msgstr "无条件退款"
+
+#: app/templates/index-3.html:53
+msgid "IF THE ITEM DIDN’T SUIT YOU"
+msgstr "如果商品不适合"
+
+#: app/templates/index-3.html:65
+msgid "Our History"
+msgstr "我们的历史"
+
+#: app/templates/index-3.html:66
+msgid "A little story about us"
+msgstr "我们的故事"
+
+#: app/templates/index-3.html:74
+msgid ""
+"Founded in 1993 by the BECKER family in Dublin, Ireland, and is a family-"
+"owned musical instrument sales business. All of its business have been "
+"walk-in retail customers, and the company now wanted to expand into the "
+"online market."
+msgstr "我们是一个家族所有的乐器经销商，于1993年由爱尔兰都柏林Becker家族成立。之前，我们只有进店选购的商业模式，而现在我们想要扩展在线市场"
+
+#: app/templates/index-3.html:75
+msgid ""
+"The company's main products are piano, violin, guitar, and other more "
+"than ten varieties and ancillary services, selling well in Dublin."
+msgstr "公司主营商品有钢琴、小提琴、吉他以及其他数十种乐器和额外服务，在都柏林有良好销量"
+
+#: app/templates/index-3.html:95 app/templates/index-3.html:108
+msgid "Category:"
+msgstr "类别："
+
+#: app/templates/index-3.html:98 app/templates/index-3.html:111
+msgid "Buy Now"
+msgstr "立即购买"
+
+#: app/templates/index-3.html:131 app/templates/index-3.html:315
+msgid "The Most Trendy"
+msgstr "最热门商品"
+
+#: app/templates/index-3.html:132
+msgid "Featured Products"
+msgstr "特色商品"
+
+#: app/templates/index-3.html:150 app/templates/index-3.html:248
+#: app/templates/index-3.html:331
+msgid "Sale!"
+msgstr "促销！"
+
+#: app/templates/index-3.html:166 app/templates/index-3.html:264
+#: app/templates/index-3.html:353 app/templates/shop.html:318
+#: app/templates/shop.html:368 app/templates/single-product.html:147
+#: app/templates/single-product.html:300
+msgid "Add To Cart"
+msgstr "添加到购物车"
+
+#: app/templates/index-3.html:189
+msgid "Deal of The Day"
+msgstr "今日促销"
+
+#: app/templates/index-3.html:316
+msgid "Bestseller Products"
+msgstr "最畅销商品"
+
+#: app/templates/my-account.html:41
+msgid "Dear"
+msgstr "亲爱的"
+
+#: app/templates/my-account.html:42
+msgid "Switch Account?"
+msgstr "切换账号"
+
+#: app/templates/my-account.html:43
+msgid "Update Avatar?"
+msgstr "上传头像？"
+
+#: app/templates/my-account.html:48
+msgid "Any Feedback Please E-Mail to Staff"
+msgstr "向工作人员反馈任何情况"
+
+#: app/templates/my-account.html:58
+msgid "Addresses"
+msgstr "地址"
+
+#: app/templates/my-account.html:59 app/templates/my-account.html:102
+msgid "Orders"
+msgstr "订单"
+
+#: app/templates/my-account.html:66
+msgid "ADDRESS"
+msgstr "地址"
+
+#: app/templates/my-account.html:66
+msgid "Add New"
+msgstr "添加"
+
+#: app/templates/my-account.html:73 app/templates/order.html:63
+msgid "Gender"
+msgstr "性别"
+
+#: app/templates/my-account.html:76
+msgid "Operations"
+msgstr "操作"
+
+#: app/templates/my-account.html:85
+msgid "Male"
+msgstr "男性！"
+
+#: app/templates/my-account.html:87
+msgid "Female"
+msgstr "女性"
+
+#: app/templates/my-account.html:92
+msgid "Please View Detail"
+msgstr "请查看详情"
+
+#: app/templates/my-account.html:94 app/templates/my-account.html:123
+msgid "View Detail"
+msgstr "查看所有"
+
+#: app/templates/my-account.html:107
+msgid "ID"
+msgstr "单号"
+
+#: app/templates/my-account.html:108
+msgid "Purchase Time"
+msgstr "购物时间"
+
+#: app/templates/admin/order.html:29 app/templates/admin/order_modify.html:25
+#: app/templates/my-account.html:109 app/templates/order.html:75
+msgid "Ship Method"
+msgstr "运输方式"
+
+#: app/templates/admin/order.html:30 app/templates/my-account.html:110
+msgid "Status"
+msgstr "状态"
+
+#: app/templates/admin/order_modify.html:28 app/templates/admin/product.html:30
+#: app/templates/admin/product.html:103
+#: app/templates/admin/product_modify.html:67 app/templates/my-account.html:111
+#: app/templates/order.html:93
+msgid "Price"
+msgstr "价格"
+
+#: app/templates/my-account.html:112
+msgid "Actions"
+msgstr "功能"
+
+#: app/templates/my-account.html:150
+msgid "Upload New Avatar"
+msgstr "上传新头像"
+
+#: app/templates/admin/category.html:85 app/templates/admin/category.html:114
+#: app/templates/admin/category.html:143 app/templates/admin/product.html:147
+#: app/templates/admin/product.html:176
+#: app/templates/admin/product_modify.html:101
+#: app/templates/admin/product_modify.html:140
+#: app/templates/my-account.html:157 app/templates/order.html:169
+msgid "Confirm"
+msgstr "确认"
+
+#: app/templates/admin/base.html:84 app/templates/order.html:17
+msgid "Order"
+msgstr "订单"
+
+#: app/templates/order.html:22
+msgid "My Order"
+msgstr "我的订单"
+
+#: app/templates/admin/category.html:28 app/templates/admin/category.html:79
+#: app/templates/admin/product.html:28 app/templates/admin/product.html:95
+#: app/templates/admin/product.html:96
+#: app/templates/admin/product_modify.html:59 app/templates/order.html:58
+msgid "Name"
+msgstr "姓名"
+
+#: app/templates/order.html:85
+msgid "Note"
+msgstr "备注"
+
+#: app/templates/order.html:87
+msgid "Edit Info"
+msgstr "更改信息"
+
+#: app/templates/order.html:118
+msgid "Order Total Price"
+msgstr "订单总计"
+
+#: app/templates/order.html:146
+msgid "Country"
+msgstr "国家"
+
+#: app/templates/order.html:151
+msgid "City"
+msgstr "城市"
+
+#: app/templates/order.html:156
+msgid "Street"
+msgstr "街道"
+
+#: app/templates/order.html:161
+msgid "Detail"
+msgstr "细节"
+
+#: app/templates/portfolio.html:38 app/templates/shop.html:150
+#: app/templates/shop.html:152
+msgid "all"
+msgstr "所有"
+
+#: app/templates/search.html:8
+msgid "Search by"
+msgstr "搜索"
+
+#: app/templates/search.html:10
+msgid "total"
+msgstr "总和"
+
+#: app/templates/search.html:10
+msgid "passages"
+msgstr "文章"
+
+#: app/templates/shop.html:145
+msgid "Product Categories"
+msgstr "类别"
+
+#: app/templates/shop.html:168
+msgid "Filter by price"
+msgstr "价格过滤"
+
+#: app/templates/shop.html:173
+msgid "price"
+msgstr "价格"
+
+#: app/templates/shop.html:176
+msgid "Filter"
+msgstr "过滤"
+
+#: app/templates/shop.html:184
+msgid "Top Rated Products"
+msgstr "相关商品"
+
+#: app/templates/shop.html:266
+msgid "Sort By"
+msgstr "排序"
+
+#: app/templates/shop.html:268
+msgid "Nothing"
+msgstr "无"
+
+#: app/templates/shop.html:269
+msgid "Name, A to Z"
+msgstr "名称，A 到 Z"
+
+#: app/templates/shop.html:270
+msgid "Name, Z to A"
+msgstr "名称，A 到 Z"
+
+#: app/templates/shop.html:271
+msgid "Price, low to high"
+msgstr "价格，低到高"
+
+#: app/templates/shop.html:272
+msgid "Price, high to low"
+msgstr "价格，高到低"
+
+#: app/templates/shop.html:276 app/templates/shop.html:279
+#: app/templates/shop.html:281
+msgid "Showing"
+msgstr "展示"
+
+#: app/templates/shop.html:276 app/templates/shop.html:279
+#: app/templates/shop.html:281
+msgid "of"
+msgstr "中"
+
+#: app/templates/shop.html:276
+msgid "result"
+msgstr "结果"
+
+#: app/templates/shop.html:279 app/templates/shop.html:281
+msgid "results"
+msgstr "结果"
+
+#: app/templates/shop.html:302 app/templates/shop.html:341
+msgid "Sale"
+msgstr "促销"
+
+#: app/templates/single-product.html:30
+msgid "Single Product"
+msgstr "商品"
+
+#: app/templates/single-product.html:127
+msgid "customer review"
+msgstr "顾客评论"
+
+#: app/templates/single-product.html:139
+msgid "in stock"
+msgstr "现货"
+
+#: app/templates/single-product.html:153
+msgid "Customer Service"
+msgstr "顾客服务"
+
+#: app/templates/single-product.html:185
+msgid "Reviews"
+msgstr "评论"
+
+#: app/templates/single-product.html:200
+msgid "review for"
+msgstr "评论"
+
+#: app/templates/single-product.html:221
+msgid "Add a review"
+msgstr "添加评论"
+
+#: app/templates/single-product.html:228
+msgid "Very Good"
+msgstr "很好"
+
+#: app/templates/single-product.html:229
+msgid "Good"
+msgstr "好"
+
+#: app/templates/single-product.html:230
+msgid "Moderate"
+msgstr "一般"
+
+#: app/templates/single-product.html:231
+msgid "Bad"
+msgstr "不好"
+
+#: app/templates/single-product.html:232
+msgid "Very Bad"
+msgstr "很不好"
+
+#: app/templates/single-product.html:242
+msgid "Submit"
+msgstr "提交"
+
+#: app/templates/single-product.html:266
+msgid "Related products"
+msgstr "相关商品"
+
+#: app/templates/single-product.html:318
+msgid "Official"
+msgstr "官方"
+
+#: app/templates/single-product.html:319
+msgid "already"
+msgstr "已经"
+
+#: app/templates/single-product.html:319
+msgid "messages"
+msgstr "消息"
+
+#: app/templates/single-product.html:326
+msgid "waiting for customer service"
+msgstr "等待客服"
+
+#: app/templates/single-product.html:331
+msgid "Type your message"
+msgstr "输入你的消息"
+
+#: app/templates/admin/base.html:171 app/templates/admin/chat.html:39
+#: app/templates/single-product.html:336
+msgid "Send"
+msgstr "发送"
+
+#: app/templates/update.html:22
+msgid "Update to formal version"
+msgstr "更新到正式版本"
+
+#: app/templates/update.html:25
+msgid "Fix comment box display error"
+msgstr "修复评论文本框显示错误"
+
+#: app/templates/update.html:28
+msgid "Update add blog UI design"
+msgstr "更新添加博客界面"
+
+#: app/templates/update.html:31
+msgid "Change background image"
+msgstr "更改背景图片"
+
+#: app/templates/update.html:34
+msgid "Support multi-language"
+msgstr "支持多语言"
+
+#: app/templates/update.html:37
+msgid "Add search function"
+msgstr "添加搜索功能"
+
+#: app/templates/update.html:40
+msgid "Fix image display bug"
+msgstr "修复图片显示错误"
+
+#: app/templates/update.html:43
+msgid "Add comment feature"
+msgstr "添加评论功能"
+
+#: app/templates/update.html:46
+msgid "Support post images"
+msgstr "支持发布图片"
+
+#: app/templates/update.html:49
+msgid "First version"
+msgstr "第一版"
+
+#: app/templates/admin/base.html:61
+msgid "Function"
+msgstr "功能"
+
+#: app/templates/admin/base.html:66
+msgid "ChatRoom"
+msgstr "聊天室"
+
+#: app/templates/admin/base.html:72
+msgid "Visualization"
+msgstr "可视化"
+
+#: app/templates/admin/base.html:76
+msgid "Staff"
+msgstr "工作人员"
+
+#: app/templates/admin/base.html:79 app/templates/admin/order_modify.html:79
+msgid "Management"
+msgstr "管理"
+
+#: app/templates/admin/base.html:81 app/templates/admin/chat.html:22
+#: app/templates/admin/index.html:27
+msgid "User"
+msgstr "用户"
+
+#: app/templates/admin/base.html:82 app/templates/admin/product_modify.html:85
+msgid "Category"
+msgstr "类别"
+
+#: app/templates/admin/base.html:85
+msgid "Pandemic"
+msgstr "疫情"
+
+#: app/templates/admin/base.html:122
+msgid "Head Staff"
+msgstr "管理员"
+
+#: app/templates/admin/category.html:19
+msgid "Category Management"
+msgstr "类别管理"
+
+#: app/templates/admin/category.html:29 app/templates/admin/order.html:32
+#: app/templates/admin/product.html:33
+msgid "Operation"
+msgstr "操作"
+
+#: app/templates/admin/category.html:72
+msgid "Add New Category"
+msgstr "添加新类别"
+
+#: app/templates/admin/category.html:100
+msgid "Remove Category"
+msgstr "删除类别"
+
+#: app/templates/admin/category.html:107 app/templates/admin/product.html:169
+msgid "Confirm Delete"
+msgstr "确认删除"
+
+#: app/templates/admin/category.html:129
+msgid "Modify Category"
+msgstr "更改类别"
+
+#: app/templates/admin/category.html:136
+msgid "Name Update"
+msgstr "更新名称"
+
+#: app/templates/admin/chat.html:23
+msgid "customer channel"
+msgstr "顾客频道"
+
+#: app/templates/admin/data_visualize.html:20
+msgid "Recent Orders"
+msgstr "最近订单"
+
+#: app/templates/admin/data_visualize.html:30
+msgid "Category Order Amount"
+msgstr "类别订单数"
+
+#: app/templates/admin/data_visualize.html:42
+msgid "Category Product Amount"
+msgstr "类别商品数"
+
+#: app/templates/admin/data_visualize.html:52
+msgid "Word Cloud"
+msgstr "字云"
+
+#: app/templates/admin/index.html:19
+msgid "User Management"
+msgstr "管理"
+
+#: app/templates/admin/index.html:29
+msgid "Last Time"
+msgstr "上次"
+
+#: app/templates/admin/live.html:11
+msgid "Live"
+msgstr "直播"
+
+#: app/templates/admin/order.html:19
+msgid "Order Management"
+msgstr "订单管理"
+
+#: app/templates/admin/order.html:27
+msgid "Purchaser"
+msgstr "购买人"
+
+#: app/templates/admin/order.html:28 app/templates/admin/order_modify.html:22
+msgid "Place Time"
+msgstr "下单时间"
+
+#: app/templates/admin/order.html:31
+msgid "Priority"
+msgstr "优先"
+
+#: app/templates/admin/order_modify.html:14
+msgid "Order Detail"
+msgstr "订单详情"
+
+#: app/templates/admin/order_modify.html:19
+msgid "Buyer"
+msgstr "购买人"
+
+#: app/templates/admin/order_modify.html:46
+msgid "Related Product"
+msgstr "相关商品"
+
+#: app/templates/admin/order_modify.html:55
+msgid "Link"
+msgstr "链接"
+
+#: app/templates/admin/order_modify.html:84
+msgid "Created"
+msgstr "创建"
+
+#: app/templates/admin/order_modify.html:87
+msgid "Packing"
+msgstr "打包"
+
+#: app/templates/admin/order_modify.html:90
+msgid "In Delivery"
+msgstr "配送中"
+
+#: app/templates/admin/order_modify.html:93
+msgid "Accomplished"
+msgstr "完成"
+
+#: app/templates/admin/order_modify.html:112
+msgid "PREV"
+msgstr "前一个"
+
+#: app/templates/admin/order_modify.html:113
+msgid "NEXT"
+msgstr "后一个"
+
+#: app/templates/admin/order_modify.html:114
+msgid "EDIT"
+msgstr "编辑"
+
+#: app/templates/admin/pandemic.html:27
+msgid "Pandemic Management"
+msgstr "疫情管理"
+
+#: app/templates/admin/pandemic.html:30
+msgid "Offline Store Status: "
+msgstr "线下商店情况："
+
+#: app/templates/admin/product.html:19
+msgid "Product Management"
+msgstr "商品管理"
+
+#: app/templates/admin/product.html:20
+msgid "ADD"
+msgstr "添加"
+
+#: app/templates/admin/product.html:29
+#: app/templates/admin/product_modify.html:63
+msgid "Weight"
+msgstr "重量"
+
+#: app/templates/admin/product.html:32 app/templates/admin/product.html:111
+#: app/templates/admin/product_modify.html:75
+msgid "Inventory"
+msgstr "库存"
+
+#: app/templates/admin/product.html:88
+msgid "Add New Product"
+msgstr "添加新商品"
+
+#: app/templates/admin/product.html:118 app/templates/admin/product.html:123
+#: app/templates/admin/product.html:128
+msgid "Upload Image"
+msgstr "上传图片"
+
+#: app/templates/admin/product.html:162
+msgid "Remove Product"
+msgstr "删除商品"
+
+#: app/templates/admin/product_modify.html:13
+msgid "Product Detail"
+msgstr "产品详情"
+
+#: app/templates/admin/product_modify.html:123
+msgid "Modify Product Image"
+msgstr "更改商品图片"
+
+#: app/templates/auth/login.html:22 app/templates/auth/login.html:27
+#: app/templates/auth/login.html:50
+msgid "Login"
+msgstr "登陆"
+
+#: app/templates/auth/login.html:42 app/templates/auth/register.html:37
+#: app/templates/auth/reset_password_application.html:36
+#: app/templates/auth/reset_password_execution.html:36
+msgid "NEW TO OUR SHOP"
+msgstr "第一次用我们到网站"
+
+#: app/templates/auth/login.html:43 app/templates/auth/register.html:38
+#: app/templates/auth/reset_password_application.html:37
+#: app/templates/auth/reset_password_execution.html:37
+msgid "ALWAYS CHASING FOR BETTER MELODY AND TONE"
+msgstr "一直追求更好的音乐"
+
+#: app/templates/auth/login.html:44
+#: app/templates/auth/reset_password_application.html:38
+#: app/templates/auth/reset_password_execution.html:38
+msgid "Create an Account"
+msgstr "创建账号"
+
+#: app/templates/auth/login.html:60 app/templates/auth/register.html:65
+#: app/templates/auth/reset_password_execution.html:50
+msgid "Password"
+msgstr "密码"
+
+#: app/templates/auth/login.html:76
+msgid "Forget password"
+msgstr "忘记密码"
+
+#: app/templates/auth/register.html:5 app/templates/auth/register.html:17
+#: app/templates/auth/register.html:22 app/templates/auth/register.html:45
+msgid "Register"
+msgstr "注册"
+
+#: app/templates/auth/register.html:39
+msgid "Login Your Account"
+msgstr "登陆你的账号"
+
+#: app/templates/auth/register.html:58
+msgid "Username"
+msgstr "用户名"
+
+#: app/templates/auth/register.html:72
+#: app/templates/auth/reset_password_execution.html:57
+msgid "Password Confirm"
+msgstr "密码确认"
+
+#: app/templates/auth/reset_password_application.html:5
+#: app/templates/auth/reset_password_application.html:17
+#: app/templates/auth/reset_password_application.html:22
+#: app/templates/auth/reset_password_application.html:44
+#: app/templates/auth/reset_password_execution.html:17
+#: app/templates/auth/reset_password_execution.html:22
+#: app/templates/auth/reset_password_execution.html:44
+msgid "Reset Password"
+msgstr "重置密码"
+
+#~ msgid "Add a review"
+#~ msgstr "添加评论"
+
+#~ msgid "Your email address will not be published."
+#~ msgstr "你的邮箱不会被公布"
+
+#~ msgid "Checkout"
+#~ msgstr "结算"
+
+#~ msgid "Music Zone Official"
+#~ msgstr "音乐地带官方"
+
+#~ msgid "messages"
+#~ msgstr "消息"
+
+#~ msgid "add to cart"
+#~ msgstr "添加到购物车"
+
+#~ msgid "More"
+#~ msgstr "更多"
+
+#~ msgid "Frequently Questions"
+#~ msgstr "常见问题"
+
+#~ msgid "Wishlist"
+#~ msgstr "愿望单"
+
+#~ msgid "Currency"
+#~ msgstr "货币"
+
+#~ msgid "Version Update"
+#~ msgstr "版本更新"
+
+#~ msgid "Popular Link"
+#~ msgstr "热门链接"
+
+#~ msgid "Comments"
+#~ msgstr "留言"
+
+#~ msgid "Have a coupon"
+#~ msgstr "有优惠券"
+
+#~ msgid "Click here to enter your code"
+#~ msgstr "点击这里输入你的优惠券"
+
+#~ msgid "Delivery Info"
+#~ msgstr "配送信息"
+
+#~ msgid "Date"
+#~ msgstr "日期"
+
+#~ msgid "Settings"
+#~ msgstr "设置"
+
+#~ msgid "We want you really feeling about this website"
+#~ msgstr ""
+
+#~ msgid "REMINISCENT ADDRESS"
+#~ msgstr "地址"
+
+#~ msgid "Ship Way"
+#~ msgstr ""
+
+#~ msgid "名称，Z 到 A"
+#~ msgstr ""
+
+#~ msgid "English"
+#~ msgstr "英语"
+
+#~ msgid "Chinese"
+#~ msgstr "中文"
+
+#~ msgid "Archives"
+#~ msgstr "归档"
+
+#~ msgid "Type then press Enter to search"
+#~ msgstr ""
+
+#~ msgid "Enter title here"
+#~ msgstr ""
+
+#~ msgid "PICK UP"
+#~ msgstr "自提"
+
+#~ msgid "Add to Wishlist"
+#~ msgstr "添加到愿望单"
+
+#~ msgid "Guitar"
+#~ msgstr "吉他"
+
+#~ msgid "Piano"
+#~ msgstr "钢琴"
+
+#~ msgid "Stings"
+#~ msgstr "弦乐"
+
+#~ msgid "Saxophone"
+#~ msgstr "萨克斯"
+
+#~ msgid "Woods"
+#~ msgstr "木管乐器"
+
+#~ msgid "Brass"
+#~ msgstr "铜管乐器"
+
+#~ msgid "Drums"
+#~ msgstr "鼓类"
+

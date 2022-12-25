@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Widget</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="../../static/css/style_chat.css">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      var user_name = "";
+      var room_name = "waiting";
+      var is_connected = false;
+      var socket = null;
+      var n_msgs = 0;
+
+      // user connect to server, join the waiting room
+      $('#open_chatroom').on('click', function () {
+        if (!is_connected){
+          socket = io.connect('http://' + document.domain + ':' + location.port + '/chatroom ');
+          user_name = $('#user_name').val();
+          socket.emit('user_join_wait', {room: room_name, user: user_name});
+          is_connected = true
+          $('#open_chatroom').val("Disconnect");
+
+          // admin accept the chat request of user (user join the one2one channel)
+          socket.on('admin_accept_response', function (data) {
+            if (user_name === data.user){
+              socket.emit('join', {room: "chat_channel_"+user_name, user: user_name});
+              room_name = "chat_channel_"+user_name;
+            }
+          })
+
+          // receive message
+          socket.on('msg_response', function(data) {
+              if (user_name === data.user){
+
+              } else {
+                  var msg = data.msg;
+                  if (msg !== '') {
+                    var t = getCurrentTime();
+                    var msg_html = "";
+                    msg_html = msg_html + '<li class="clearfix"><div class="message-data">';
+                    msg_html = msg_html + '<span class="message-data-name"><i class="fa fa-circle online"></i>' + "Music Zone Official" + '</span>';
+                    msg_html = msg_html + '<span class="message-data-time">' + t + ', Today</span></div>';
+                    msg_html = msg_html + '<div class="other-message">' + msg + '</div></li>';
+                    $('#chat_area').append(msg_html);
+                    scrollToBottom();
+                    n_msgs += 1;
+                    updateMessageNum(n_msgs);
+                  }
+              }
+          });
+
+          // receive image
+          socket.on('img_response', function(data) {
+              if (user_name !== data.user){
+                  let arrayBufferView = new Uint8Array(data['img']);
+                  let blob = new Blob( [ arrayBufferView ], { type: "image" } );
+                  let img_url = URL.createObjectURL(blob);
+                  var t = getCurrentTime();
+                  var img_html = "";
+                  img_html = img_html + '<li><div class="message-data">';
+                  img_html = img_html + '<span class="message-data-name"><i class="fa fa-circle online"></i>' + "Music Zone Official" + '</span>';
+                  img_html = img_html + '<span class="message-data-time">' + t + ', Today</span></div>';
+                  img_html = img_html + '<div class="other-img"><img src="' + img_url + '" style="width: 100%; height: 100%"></div></li>';
+                  $('#chat_area').append(img_html);
+                  scrollToBottom();
+                  n_msgs += 1;
+                  updateMessageNum(n_msgs);
+              }
+          });
+        }
+      });
+
+      // send message
+      $('#send_btn').on('click', function () {
+        scrollToBottom();
+        var msg = $('#message-to-send').val();
+        if (msg !== '') {
+          var t = getCurrentTime();
+          var msg_html = "";
+          msg_html = msg_html + '<li class="clearfix"><div class="message-data align-right">';
+          msg_html = msg_html + '<span class="message-data-time">' + t + ', Today </span>';
+          msg_html = msg_html + '<span class="message-data-name">' + user_name + ' </span><i class="fa fa-circle online"></i></div>';
+          msg_html = msg_html + '<div class="my-message">' + msg + '</div></li>';
+          $('#chat_area').append(msg_html);
+          scrollToBottom();
+          $('#message-to-send').val('');
+          socket.emit('send', {room: room_name, msg: msg, user: user_name});
+          n_msgs += 1;
+          updateMessageNum(n_msgs);
+        }
+      })
+
+      // send image
+      $('#send_img_pre').on('click', function () {
+        $('#send_img').click();
+      })
+      $('#send_img').on('change', function () {
+        var file_name = document.getElementById('send_img').files[0].name;
+        var file_format = file_name.substring(file_name.lastIndexOf(".")).toLowerCase();
+        // check format
+        if(!file_format.match(/.png|.jpg|.jpeg/) ) {
+            alert("Only .png, .jpg, and .jpeg format image are supported !")
+            return;
+        }
+        var t = getCurrentTime();
+        var img_html = "";
+        var src = window.URL.createObjectURL(this.files[0]);
+        img_html = img_html + '<li class="clearfix2"><div class="message-data align-right">';
+        img_html = img_html + '<span class="message-data-time">' + t + ', Today </span>';
+        img_html = img_html + '<span class="message-data-name">' + user_name + ' </span><i class="fa fa-circle online"></i></div>';
+        img_html = img_html + '<div class="my-img"><img src="' + src + '" style="width: 100%; height: 100%"></div></li>';
+        $('#chat_area').append(img_html);
+        scrollToBottom();
+        socket.emit('send_img', {room: room_name, file_name: file_name, user: user_name, img: $('#send_img')[0].files[0]});
+        n_msgs += 1;
+        updateMessageNum(n_msgs);
+      })
+
+      // leave room button
+      $('#leave_room').on('click', function () {
+        socket.emit("leave", {room: room_name, user: user_name})
+        $('#chat_area').html('');
+        $('#user_name').val('');
+        $('#open_chatroom').val("Connect");
+        is_connected = false;
+      })
+
+      // leave room before the page refresh, close, ...
+      window.onbeforeunload = function (event) {
+        socket.emit("leave", {room: room_name, user: user_name})
+      }
+    })
+    function updateMessageNum(n_msgs) {
+      document.getElementById("msgs_num").innerText = 'already ' + n_msgs + ' messages';
+    }
+
+    function scrollToBottom() {
+       $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+    }
+
+    function getCurrentTime() {
+      return new Date().toLocaleTimeString().
+              replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+    }
+
+  </script>
+</head>
+<body>
+    <div class="chat">
+      <div>
+        <input type="text" id="user_name" placeholder="Your Name" style="background-color: #75b1e8; margin: 10px;">
+        <input type="button" id="open_chatroom" value="Connect" style="background-color: #75b1e8; margin: 10px">
+      </div>
+
+      <div class="chat-header clearfix">
+        <img src="../static/img/t1.png" alt="avatar" />
+        <div class="chat-about">
+          <div class="chat-with" id="chat_target">Music Zone Official</div>
+          <div class="chat-num-messages" id="msgs_num">already 0 messages</div>
+        </div>
+        <i class="fa fa-sign-out online" href="#" id="leave_room"></i>
+      </div>
+
+
+      <div class="chat-history">
+        <ul id="chat_area">
+
+        </ul>
+      </div>
+
+      <div class="chat-message clearfix">
+        <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+
+        <i class="fa fa-file-picture-o img-submit" id="send_img_pre"></i>
+        <input type="file" id="send_img" style="display: none">
+
+        <button id="send_btn">Send</button>
+      </div>
+    </div>
+
+</body>
+</html>

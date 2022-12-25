@@ -1,0 +1,11 @@
+Dear {{ user.username }},
+
+Welcome to Music Zone!
+
+To enjoy the musical feast, please click on the following link to confirm your account:
+
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+Best regards,
+
+Team SEP2-7

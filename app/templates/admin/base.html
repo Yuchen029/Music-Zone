@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Administrator</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Https -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
+
+    <!-- fontawesome icon -->
+    <link rel="stylesheet" href="../../static/fonts/fontawesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- animation css -->
+    <link rel="stylesheet" href="../../static/plugins/animation/css/animate.min.css">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="../../static/css/style_admin.css">
+    <!-- Modal -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Agora / Live -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../static/css/style_live_admin.css">
+    <script src="../../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../../static/js/bootstrap.bundle.min.js"></script>
+    <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/socket.io/3.1.2/socket.io.js"></script>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+<!--Preloader-->
+<div class="loader-bg">
+    <div class="loader-track">
+        <div class="loader-fill"></div>
+    </div>
+</div>
+
+<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar">
+    <div class="navbar-wrapper">
+        <div class="navbar-brand header-logo">
+            <a href="{{ url_for('admin.index') }}" class="b-brand">
+                <div class="b-bg">
+                    <img src="../../static/storage/admin_logo.png" alt="" style="height: 60px"/>
+                </div>
+                <span class="b-title">{{ _('Music Zone') }}</span>
+            </a>
+            <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
+        </div>
+        <div class="navbar-content scroll-div">
+            <ul class="nav pcoded-inner-navbar">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>{{ _('Function') }}</label>
+                </li>
+                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item">
+{#                    <a href="{{ url_for('chat.admin_chat') }}" class="nav-link ">#}
+                    <a class="nav-link" onclick="return to_chat_room()" style="cursor: pointer" href="">
+                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                        <span class="pcoded-mtext" style="">{{ _('ChatRoom') }}</span>
+                    </a>
+                </li>
+                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item">
+                    <a href="{{ url_for('admin.data_visualize') }}" class="nav-link ">
+                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                        <span class="pcoded-mtext" style="">{{ _('Visualization') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item pcoded-menu-caption">
+                    <label>{{ _('Staff') }}</label>
+                </li>
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">{{ _('Management') }}</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="{{ url_for('admin.index') }}" class="">{{ _('User') }}</a></li>
+                        <li class=""><a href="{{ url_for('admin.category') }}" class="">{{ _('Category') }}</a></li>
+                        <li class=""><a href="{{ url_for('admin.product') }}" class="">{{ _('Product') }}</a></li>
+                        <li class=""><a href="{{ url_for('admin.order') }}" class="">{{ _('Order') }}</a></li>
+                        <li class=""><a href="{{ url_for('admin.pandemic') }}" class="">{{ _('Pandemic') }}</a></li>
+{#                        <li class=""><a href="icon-feather.html" class="">Feather<span class="pcoded-badge label label-danger">NEW</span></a></li>#}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- [ navigation menu ] end -->
+
+<!-- [ Header ] start -->
+<header class="navbar pcoded-header navbar-expand-lg navbar-light">
+    <div class="m-header">
+        <a class="mobile-menu" id="mobile-collapse1" href="javascript:"><span></span></a>
+        <a href="{{ url_for('admin.index') }}" class="b-brand">
+            <div class="b-bg">
+                <img src="../../static/storage/admin_logo.png" alt="" style="height: 60px"/>
+            </div>
+            <span class="b-title">Datta Able</span>
+        </a>
+    </div>
+    <a class="mobile-menu" id="mobile-header" href="javascript:">
+        <img src="../../static/storage/admin_logo.png" alt="" style="height: 50px"/>
+    </a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li><a href="javascript:" class="full-screen" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a></li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li>
+                <div class="dropdown drp-user">
+                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-target="#setting_drop">
+                        <i class="icon feather icon-settings"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right profile-notification" id="setting_drop">
+                        <div class="pro-head">
+                            <img src="../../static/storage/avatars/avatar_admin.jpg" class="img-radius" alt="User-Profile-Image">
+                            <span>{{ _('Head Staff') }}</span>
+                            <a href="{{ url_for('auth.logout') }}" class="dud-logout" title="Logout">
+                                <i class="feather icon-log-out"></i>
+                            </a>
+                        </div>
+                        <ul class="pro-body">
+                            <li><a href="#" class="dropdown-item" id="switch-to-english">English</a></li>
+                            <li><a href="#" class="dropdown-item" id="switch-to-chinese">中文</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</header>
+<!-- [ Header ] end -->
+
+{% block content %}
+    <!-- main content -->
+{% endblock %}
+
+<!--Fixed Component Start-->
+{#<i class="fa fa-youtube-play" style="font-size:50px; position: fixed; bottom: 100px; right: 25px; cursor: pointer" id="open_liveroom"></i>#}
+<img alt="agora-logo" src="../../static/icon/agora-logo.png" style="width: 50px; height: 50px; position: fixed; bottom: 100px; right: 25px; cursor: pointer" id="open_liveroom">
+<!--Fixed Component End-->
+
+<!--Movable Component Start-->
+<div class="live_container" id="liveroom">
+    <div class="live_left">
+        <div class="live_left_top"></div>
+        <div class="live_left_stream" id="stream">
+
+        </div>
+        <div class="live_left_bottom"></div>
+    </div>
+    <div class="live_right" id="live_right">
+        <div class="live_right_top" id="live_right_top">
+            <img alt="head" src="{{ current_user.avatar_path }}" class="live_right_top_img">
+            <span class="live_right_top_name">{{ current_user.username }}</span>
+            <i class="fa fa-sign-out online" style="float: right; margin-top: 15px; margin-right: 10px; cursor: pointer" id="leave_live"></i>
+        </div>
+        <div class="live_right_history" id="live_right_history">
+          <ul class="live_right_message_edit_ul" id="live_msg_history">
+
+          </ul>
+        </div>
+        <div class="live_right_message_edit clearfix" id="live_right_message_edit">
+          <textarea class="message_edit" placeholder ="Type your message" rows="2" id="live_msg_edit"></textarea>
+
+          <button class="send_btn" id="send_btn">{{ _('Send') }}</button>
+        </div>
+    </div>
+</div>
+<!--Movable Component End-->
+
+<script>
+    $(document).ready(function () {
+        var is_adapted = false;
+
+        // adaptation
+        if (window.innerWidth < 750 && !is_adapted) {
+            let el = document.getElementById("liveroom");
+            el.style.width = '480px';
+            el.style.height = '640px';
+            let live_right = document.getElementById("live_right");
+            live_right.style.float = "none";
+            live_right.style.width = "480px";
+            let live_right_top = document.getElementById("live_right_top");
+            live_right_top.style.width = "480px";
+            let live_right_history = document.getElementById("live_right_history");
+            live_right_history.style.width = "480px";
+            let live_right_message_edit = document.getElementById("live_right_message_edit")
+            live_right_message_edit.style.width = "480px";
+
+            let alpha_h = window.innerHeight / 640;
+            let alpha_w = window.innerWidth / 480;
+            let alpha = alpha_h > alpha_w ? alpha_w:alpha_h;
+            el.style.transform = "scale("+alpha.toString()+")";
+            is_adapted = true;
+
+            el.style.top = String((window.innerHeight-640)/2) + 'px';
+            el.style.left = String((window.innerWidth-480)/2) + 'px';
+        }
+        // create Agora client
+        var client = null;
+        var localTracks = {
+            videoTrack: null,
+            audioTrack: null
+        };
+        var remoteUsers = {};
+
+        // Agora client options
+        var options = {
+            appid: "",
+            channel: "",
+            uid: null,
+            token: "",
+            role: "host", // host or audience
+            audienceLatency: 1
+        };
+
+        // global variable
+        var is_liveroom_opened = false;
+        var socket = null;
+        var user_name = "Music Zone 2022";
+
+        $("#switch-to-english").on('click', function (){
+
+            $.post("{{ url_for('main.change_language') }}", {'language': 'English' },function () {
+                location.reload(true);
+            });
+        })
+
+        $("#switch-to-chinese").on('click', function (){
+
+            $.post("{{ url_for('main.change_language') }}", {'language': 'Chinese' },function () {
+                location.reload(true);
+            });
+        })
+
+        $("#open_liveroom").on('click', async function(){
+            if (is_liveroom_opened){
+                await leave();
+                document.getElementById('liveroom').style.visibility = "hidden";
+                is_liveroom_opened = false;
+                if (socket){
+                     socket.emit("leave", {room: "liveroom", user: user_name})
+                }
+            } else {
+                document.getElementById('liveroom').style.visibility = "visible";
+                is_liveroom_opened = true;
+
+                socket = io.connect(
+                        'https://' + document.domain + ':' + location.port + '/liveroom',
+                        {
+                              'reconnection': true,
+                              'reconnectionAttempts': 8,
+                              'reconnectionDelay': 1000}
+               );
+               socket.emit('join', {room: "liveroom", user: user_name, role: "admin"});
+
+               // leave room before the page refresh, close, ...
+               window.onbeforeunload = function (event) {
+                  if (socket){
+                     socket.emit("leave", {room: "liveroom", user: user_name})
+                  }
+               }
+
+               // receive message
+               socket.on('msg_response', function(data) {
+                  var msg = data.msg;
+                  if (msg !== '') {
+                    if (data.user === user_name) {
+                        $('#live_msg_edit').val("");
+                    }
+                    if (data.user === "Music Zone 2022") {
+                        var msg_html = `<li class="msg_li"><div class="msg_li_in">
+                                            <span class="msg_admin">${data.user}:</span>
+                                            <span class="msg_content">${data.msg}</span>
+                                        </div></li>`;
+                    } else {
+                        var msg_html = `<li class="msg_li"><div class="msg_li_in">
+                                            <span class="msg_user">${data.user}:</span>
+                                            <span class="msg_content">${data.msg}</span>
+                                        </div></li>`;
+                    }
+                    $('#live_msg_history').append(msg_html);
+                    scrollToBottom();
+                  }
+               });
+
+               // token message
+               socket.on('token_response', async function (data) {
+                   if (data.user === "{{ current_user.username }}") {
+                       options.token = data.token;
+                       options.uid = data.uid;
+                       options.appid = data.appid;
+                       options.channel = data.channel;
+                       client = AgoraRTC.createClient({mode: "live", codec: "vp8"});
+                       await join();
+                   }
+               })
+
+               // request agora token
+               socket.emit('request_token', {user: user_name, role: "customer"});
+            }
+        })
+
+        $('#leave_live').on('click', async function () {
+            await leave();
+            document.getElementById('liveroom').style.visibility = "hidden";
+            is_liveroom_opened = false;
+            if (socket){
+                 socket.emit("leave", {room: "liveroom", user: user_name})
+            }
+        })
+
+        $('#send_btn').on('click', function () {
+                    var msg = $('#live_msg_edit').val();
+                    // var msg_html = '<li class="msg_li"><div class="msg_user">' + user_name + ':</div><div class="msg_content">' + msg + '</div></li><br>';
+                    // $('#live_msg_history').append(msg_html);
+                    // scrollToBottom();
+                    if (msg !== ""){
+                        socket.emit('send', {room: "liveroom", msg: msg, user: user_name});
+                    }
+                })
+
+               function scrollToBottom() {
+                    $('.live_right_history').scrollTop($('.live_right_history')[0].scrollHeight);
+               }
+
+        async function join() {
+            // create Agora client
+
+            if (options.role === "host") {
+                client.setClientRole(options.role);
+            }
+
+            // join the channel
+            options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
+
+            if (options.role === "host") {
+                const player = $(`
+                    <div id="local-player" class="player"></div>
+                `);
+                $("#stream").append(player);
+                // create local audio and video tracks
+                localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
+                // play local video track
+                localTracks.videoTrack.play("local-player");
+                // publish local tracks to channel
+                await client.publish(Object.values(localTracks));
+            }
+        }
+
+        async function leave() {
+            for (trackName in localTracks) {
+                var track = localTracks[trackName];
+                if (track) {
+                    track.stop();
+                    track.close();
+                    localTracks[trackName] = undefined;
+                }
+            }
+
+            // remove remote users and player views
+            remoteUsers = {};
+            $("#stream").html("");
+
+            // leave the channel
+            await client.leave();
+        }
+    })
+
+    function to_chat_room() {
+        if (window.innerWidth <= 750){
+            alert("Only support window size > 750px, please switch to larger device.");
+        } else {
+            window.location.href = "{{ url_for('chat.admin_chat') }}";
+        }
+        return false;
+    }
+
+    $(() => {
+        let el = document.getElementById("liveroom");
+        el.onmousedown = (e) => {
+            let disX = e.clientX - el.offsetLeft;
+            let disY = e.clientY - el.offsetTop;
+            document.onmousemove = function (e) {
+                let tX = e.clientX - disX;
+                let tY = e.clientY - disY;
+
+                if (tX >= 0 && tX <= window.innerWidth - el.offsetWidth) {
+                el.style.left = tX + 'px';
+                }
+                if (tY >= 0 && tY <= window.innerHeight - el.offsetHeight) {
+                el.style.top = tY + 'px';
+                }
+            };
+            document.onmouseup = function (e) {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+        }
+    })
+</script>
+
+<!-- Required Js -->
+<script src="../../static/js/vendor-all.min.js"></script>
+<script src="../../static/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../static/js/pcoded.min.js"></script>
+
+</body>
+</html>

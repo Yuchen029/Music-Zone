@@ -1,0 +1,153 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+    <div class="pcoded-main-container">
+      <div>
+        <button id="open_liveroom">Live</button>
+      </div>
+      <div class="live_container" id="liveroom">
+        <div class="live_left">
+            <div class="live_left_title">
+                {{ _('Music Zone') }} 2022 {{ _('Live') }}
+            </div>
+            <div class="live_left_info">
+              <div class="live_left_info_img_out">
+                <img class="live_left_info_img">
+              </div>
+              <div class="live_left_info_desc">
+                <div class="live_left_info_desc_name">
+                  NAME
+                </div>
+                <div class="live_left_info_desc_desc">
+                  DESC
+                </div>
+              </div>
+            </div>
+            <div class="live_left_stream" id="stream">
+
+            </div>
+            <div class="live_left_bottom">
+
+            </div>
+        </div>
+        <div class="live_right">
+            <div class="live_right_history">
+              <ul class="live_right_message_edit_ul">
+                <li class="msg_li">
+                  <div class="msg_user">user0: </div>
+                  <div class="msg_content">OKK</div>
+                </li>
+              </ul>
+            </div>
+            <div class="live_right_message_edit clearfix">
+              <textarea class="message_edit" placeholder ="Type your message" rows="2"></textarea>
+
+              <button class="send_btn" id="send_btn">Send</button>
+            </div>
+        </div>
+      </div>
+
+      <script>
+            $(document).ready(function () {
+                // create Agora client
+                var client = AgoraRTC.createClient({mode: "live", codec: "vp8"});
+                var localTracks = {
+                    videoTrack: null,
+                    audioTrack: null
+                };
+                var remoteUsers = {};
+
+                // Agora client options
+                var options = {
+                    appid: "9bc67c8ada924e3791eab763ea5d97e5",
+                    channel: "live",
+                    uid: null,
+                    token: "0069bc67c8ada924e3791eab763ea5d97e5IAAGUFavHJIL9TK6QDZt9aolyVAE4j40769fPa2lsGwzlq8sD1MAAAAAEACf/BrpDityYgEAAQAKK3Ji",
+                    role: "host", // host or audience
+                    audienceLatency: 1
+                };
+
+                // global variable
+                var is_liveroom_opened = false;
+
+                $("#open_liveroom").on('click', async function(){
+                    if (is_liveroom_opened){
+                        await leave();
+                        document.getElementById('liveroom').style.visibility = "hidden";
+                        is_liveroom_opened = false;
+                    } else {
+                        await join();
+                        document.getElementById('liveroom').style.visibility = "visible";
+                        is_liveroom_opened = true;
+                    }
+                })
+
+                async function join() {
+                    // create Agora client
+
+                    if (options.role === "host") {
+                        client.setClientRole(options.role);
+                    }
+
+                    // join the channel
+                    options.uid = await client.join(options.appid, options.channel, options.token || null, options.uid || null);
+
+                    if (options.role === "host") {
+                        const player = $(`
+                            <div id="local-player" class="player"></div>
+                        `);
+                        $("#stream").append(player);
+                        // create local audio and video tracks
+                        localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+                        localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
+                        // play local video track
+                        localTracks.videoTrack.play("local-player");
+                        // publish local tracks to channel
+                        await client.publish(Object.values(localTracks));
+                    }
+                }
+
+                async function leave() {
+                    for (trackName in localTracks) {
+                        var track = localTracks[trackName];
+                        if (track) {
+                            track.stop();
+                            track.close();
+                            localTracks[trackName] = undefined;
+                        }
+                    }
+
+                    // remove remote users and player views
+                    remoteUsers = {};
+                    $("#stream").html("");
+
+                    // leave the channel
+                    await client.leave();
+                }
+            })
+
+            $(() => {
+                let el = document.getElementById("liveroom");
+                el.onmousedown = (e) => {
+                    let disX = e.clientX - el.offsetLeft;
+                    let disY = e.clientY - el.offsetTop;
+                    document.onmousemove = function (e) {
+                        let tX = e.clientX - disX;
+                        let tY = e.clientY - disY;
+
+                        if (tX >= 0 && tX <= window.innerWidth - el.offsetWidth) {
+                        el.style.left = tX + 'px';
+                        }
+                        if (tY >= 0 && tY <= window.innerHeight - el.offsetHeight) {
+                        el.style.top = tY + 'px';
+                        }
+                    };
+                    document.onmouseup = function (e) {
+                        document.onmousemove = null;
+                        document.onmouseup = null;
+                    };
+                }
+            })
+      </script>
+    </div>
+{% endblock %}

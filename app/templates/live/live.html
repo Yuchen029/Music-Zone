@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../../static/css/style_live.css">
+
+  <script src="../../static/js/jquery-3.4.1.min.js"></script>
+  <script src="../../static/js/bootstrap.bundle.min.js"></script>
+  <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+  <script src="../../static/js/live.js"></script>
+</head>
+<body>
+  <div>
+    <button id="open_liveroom">Live</button>
+  </div>
+  <div class="live_container" id="liveroom">
+    <div class="live_left">
+        <div class="live_left_title">
+            Music Zone 2022 Live 
+        </div>
+        <div class="live_left_info">
+          <div class="live_left_info_img_out">
+            <img class="live_left_info_img">
+          </div>
+          <div class="live_left_info_desc">
+            <div class="live_left_info_desc_name">
+              NAME
+            </div>
+            <div class="live_left_info_desc_desc">
+              DESC
+            </div>
+          </div>
+        </div>
+        <div class="live_left_stream" id="stream">
+
+        </div>
+        <div class="live_left_bottom">
+
+        </div>
+    </div>
+    <div class="live_right">
+        <div class="live_right_history">
+          <ul class="live_right_message_edit_ul">
+            <li class="msg_li">
+              <div class="msg_user">user0: </div>
+              <div class="msg_content">OKK</div>
+            </li><br>
+          </ul>
+        </div>
+        <div class="live_right_message_edit clearfix">
+          <textarea class="message_edit" placeholder ="Type your message" rows="2"></textarea>
+  
+          <button class="send_btn" id="send_btn">Send</button>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

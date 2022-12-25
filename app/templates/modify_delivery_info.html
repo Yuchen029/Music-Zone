@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--Breadcrumb Tow Start-->
+<div class="breadcrumb-tow mb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-title">
+                    <h1>Modify Delivery Information</h1>
+                </div>
+                <div class="breadcrumb-content breadcrumb-content-tow">
+                    <ul>
+                        <li><a href="{{ url_for('main.index') }}">Home</a></li>
+                        <li class="active">My Delivery Info</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Breadcrumb Tow End-->
+<div style="padding-left: 20%; padding-right: 20%">
+    <h3>Delivery Detail</h3>
+    <div class="login">
+        <div class="login-form-container">
+            <div class="account-login-form">
+                <form name="modifyForm" action="{{ url_for('main.modify_delivery_info', delivery_id=delivery_info.id) }}" method="post" onsubmit="return modifyValidate()">
+                    <label>Name</label>
+                    <input name="name" type="text" value="{{ delivery_info.name }}">
+                    <label>Gender</label>
+                    <div class="input-radio">
+                        {% if delivery_info.gender == 1 %}
+                        <span class="custom-radio"><input name="gender" value="1" type="radio" checked> Male </span>
+                        <span class="custom-radio"><input name="gender" value="2" type="radio"> Female </span>
+                        <span class="custom-radio"><input name="gender" value="3" type="radio"> Unknown </span>
+                        {% elif delivery_info.gender == 2 %}
+                        <span class="custom-radio"><input name="gender" value="1" type="radio"> Male </span>
+                        <span class="custom-radio"><input name="gender" value="2" type="radio" checked> Female </span>
+                        <span class="custom-radio"><input name="gender" value="3" type="radio"> Unknown </span>
+                        {% else %}
+                        <span class="custom-radio"><input name="gender" value="1" type="radio"> Male </span>
+                        <span class="custom-radio"><input name="gender" value="2" type="radio"> Female </span>
+                        <span class="custom-radio"><input name="gender" value="3" type="radio" checked> Unknown </span>
+                        {% endif %}
+                    </div>
+                    <label>Phone Number</label>
+                    <input name="phone" type="text" value="{{ delivery_info.phone_number }}">
+                    <label>Country/Region</label>
+                    <input name="country" type="text" value="{{ delivery_info.country }}">
+                    <label>City</label>
+                    <input name="city" type="text" value="{{ delivery_info.city }}">
+                    <label>Street</label>
+                    <input name="street" type="text" value="{{ delivery_info.street }}">
+                    <label>Detail</label>
+                    <input name="detail" type="text" placeholder="building/unit information..."
+                        value="{{ delivery_info.detail }}">
+                    <div class="button-box">
+                        <button type="submit" class="default-btn">save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function modifyValidate() {
+        const name = modifyForm.name.value;
+        const gender = modifyForm.gender.value;
+        const phone = modifyForm.phone.value;
+        const country = modifyForm.country.value;
+        const city = modifyForm.city.value;
+        const street = modifyForm.street.value;
+        const detail = modifyForm.detail.value;
+        if (!name || !gender || !phone || !country || !city || !street || !detail) {
+            alert('Please fill all the form attributes!');
+            return false;
+        }
+        if (!(/(^[1-9]\d*$)/.test(phone))) {
+            alert('The phone number should be in digits!');
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}
+

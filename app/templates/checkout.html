@@ -1,0 +1,204 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<!--Breadcrumb Tow Start-->
+<div class="breadcrumb-tow mb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-title">
+                    <h1>{{ _('Checkout') }}</h1>
+                </div>
+                <div class="breadcrumb-content breadcrumb-content-tow">
+                    <ul>
+                        <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+                        <li class="active">{{ _('Checkout') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Breadcrumb Tow End-->
+<!--Checkout Area Strat-->
+<div class="checkout-area mb-80">
+    <div class="container">
+        {#<div class="row">
+            <div class="col-12">
+                <div class="coupon-accordion">
+                    <!--Accordion Start-->
+                    <h3>{{ _('Have a coupon') }}? <span id="showcoupon">{{ _('Click here to enter your code') }}</span></h3>
+                    <div id="checkout_coupon" class="coupon-checkout-content">
+                        <div class="coupon-info">
+                            <form action="#">
+                                <p class="checkout-coupon">
+                                    <input placeholder="Coupon code" type="text">
+                                    <input value="Apply Coupon" type="submit">
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                    <!--Accordion End-->
+                </div>
+            </div>
+        </div>#}
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="your-order">
+                    <h3>{{ _('Your') }} {{ _('order') }}</h3>
+                    <div class="your-order-table table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="cart-product-name">{{ _('Product') }}</th>
+                                    <th class="cart-product-total">{{ _('Total') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for c in cart %}
+                                <tr class="cart_item">
+                                    <td class="cart-product-name"><a href="{{ url_for('main.single_product', p=c.product_id) }}">{{ c.product.name }}</a>
+                                        <strong class="product-quantity"> × {{ c.count }}</strong></td>
+                                  <td class="cart-product-total"><span class="amount">${{ c.product.price*c.product.discount*c.count }}</span></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr class="cart-subtotal">
+                                    <th>{{ _('Shipping') }}</th>
+                                    <td><span class="amount" id="ship_cost">${{ weight_pay }}</span></td>
+                                </tr>
+                                <tr class="order-total">
+                                    <th>{{ _('Order Total') }}</th>
+                                    <td><strong><span class="amount" id="total_cost">${{ weight_pay + product_pay }}</span></strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <form action="{{ url_for('main.place_order', buyer_id=current_user.id, wp=weight_pay, pp=product_pay) }}" method="post" name="checkoutForm" onsubmit="return placeValidate()">
+                    <div class="checkbox-form">
+                        <h3>{{ _('Shipping Info') }}</h3>
+                        <div class="row">
+                            {#<div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>{{ _('Discount Code') }}</label>
+                                    <input placeholder="Any discount code you have got? Enter as you wish" type="text" value="">
+                                </div>
+                            </div>#}
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>{{ _('Delivery Selection') }}</label>
+                                    <input name="delivery" placeholder="" type="text" value="" id="delivery_content" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <!-- Delivery Info Confirm -->
+                                <div class="faq-accordion">
+                                    <div id="accordion">
+                                    {% if is_pandemic %}
+                                        <span style="color: red">{{ _('Sorry. Due to the pandemic, pick-up choice is unavailable now') }}.</span>
+                                    {% else %}
+                                        <div class="card">
+                                            <div class="card-header" id="heading_0">
+                                                <h5 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" data-target="#collapse_0"
+                                                       aria-expanded="false" aria-controls="collapse_0" onclick="free_ship()">
+                                                        <strong>{{ _('PICK UP') }}</strong>
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapse_0" class="collapse" aria-labelledby="heading_0" data-parent="#accordion"></div>
+                                        </div>
+                                    {% endif %}
+                                    {% for di in delivery_info_list %}
+                                        <div class="card">
+                                            <div class="card-header" id="heading_{{ di.id }}">
+                                                <h5 class="mb-0">
+                                                    <a class="collapsed" data-toggle="collapse" data-target="#collapse_{{ di.id }}"
+                                                       aria-expanded="false" aria-controls="collapse_{{ di.id }}" onclick="get_id('{{ di.id }}')">
+                                                        <strong>{{ _('Address') }} {{ di.id }}</strong>
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapse_{{ di.id }}" class="collapse" aria-labelledby="heading_{{ di.id }}" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    {% if di.gender == 1 %}
+                                                        <p>{{ _('Customer') }}: {{ _('Gentleman') }} {{ di.name }}</p>
+                                                    {% elif di.gender == 2 %}
+                                                        <p>{{ _('Customer') }}: {{ _('Lady') }} {{ di.name }}</p>
+                                                    {% else %}
+                                                        <p>{{ _('Customer') }}: {{ _('Unknown') }} {{ di.name }}</p>
+                                                    {% endif %}
+                                                    <p>{{ _('Phone Number') }}: {{ di.phone_number }}</p>
+                                                    <p>{{ _('Address') }}: {{ di.country }}-{{ di.city }}-{{ di.street }}-{{ di.detail }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                                <!-- Delivery Info Confirm -->
+                                <div style="text-align: right">
+                                    <a href="{{ url_for('main.account', user_id=current_user.id) }}" class="btn_2">{{ _('View or Edit') }}</a>
+                                </div>
+                            </div>
+                            <div class="order-notes col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>{{ _('Order Notes') }}</label>
+                                    <textarea name="note" id="checkout-mess" cols="30" rows="10" placeholder="{{ _('Please mention what you care about.') }}"></textarea>
+                                </div>
+                            </div>
+                            {% for c in cart %}
+                                <input type="hidden" name="product" value={{ c.product_id }}>
+                            {% endfor %}
+                            {% for c in cart %}
+                                <input type="hidden" name="count" value={{ c.count }}>
+                            {% endfor %}
+                            <div class="order-button-payment col-md-12">
+                                <input type="submit" value= "{{ _('Place Order') }}" style="text-align: center">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Checkout Area End-->
+
+<script>
+    placeValidate = function () {
+        if (!checkoutForm.delivery.value) {
+            alert('Please choose at least one delivery way');
+            return false;
+        }
+        return true;
+    }
+    get_id = function (id) {
+        document.getElementById("ship_cost").innerText = "$" + {{ weight_pay }};
+        document.getElementById("total_cost").innerText = "$" + {{ weight_pay + product_pay }};
+        let value = 'Address ' + id;
+        return $("#delivery_content").val(value);
+    }
+
+    free_ship = function () {
+        document.getElementById("ship_cost").innerText = "$0.0";
+        document.getElementById("total_cost").innerText = "$" + {{ product_pay }};
+        let value = 'PICK UP';
+        return $("#delivery_content").val(value);
+    }
+</script>
+{% endblock %}
+</body>
+</html>

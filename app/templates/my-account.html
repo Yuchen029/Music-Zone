@@ -1,0 +1,173 @@
+﻿{#<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Account</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.ico">
+</head>
+<body>#}
+{% extends 'base.html' %}
+{% block content %}
+<!--Breadcrumb Tow Start-->
+<div class="breadcrumb-tow mb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-title">
+                    <h1>{{ _('My Account') }}</h1>
+                </div>
+                <div class="breadcrumb-content breadcrumb-content-tow">
+                    <ul>
+                        <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+                        <li class="active">{{ _('My Account') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Breadcrumb Tow End-->
+<!--My Account Area Strat-->
+<div class="my-account white-bg mb-110">
+    <div class="container">
+        <div class="account-dashboard">
+           <div class="dashboard-upper-info">
+               <div class="row align-items-center no-gutters">
+                   <div class="col-lg-2 col-md-12 float-div">
+                       <img src="{{ current_user.avatar_path }}" alt="" style=""/>
+                   </div>
+                   <div class="col-lg-5 col-md-12">
+                       <div class="d-single-info" style="text-align: center">
+                           <p class="d">{{ _('Dear') }} <strong>{{ current_user.email }}</strong></p>
+                           <p>({{ _('Switch Account?') }} <a href="{{ url_for('auth.logout') }}">{{ _('Log Out') }}</a>)</p>
+                           <p><a data-toggle="modal" href="#avatarModal" onclick="Values_id({{ current_user.id }})">{{ _('Update Avatar?') }}</a></p>
+                       </div>
+                   </div>
+                   <div class="col-lg-5 col-md-12">
+                       <div class="d-single-info" style="text-align: center">
+                           <p>{{ _('Any Feedback Please E-Mail to Staff') }}</p>
+                           <p>abc123@gmail.com</p>
+                       </div>
+                   </div>
+               </div>
+           </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-2">
+                    <!-- Nav tabs -->
+                    <ul class="nav flex-column dashboard-list" role="tablist">
+                        <li><a class="nav-link active" data-toggle="tab" href="#address">{{ _('Addresses') }}</a></li>
+                        <li><a class="nav-link" data-toggle="tab" href="#orders">{{ _('Orders') }}</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-12 col-lg-10">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard-content">
+                        <div id="address" class="tab-pane fade show active">
+                            <h3>{{ _('ADDRESS') }} <a class="btn_2_thin" href="{{ url_for('main.add_delivery_info', user_id=current_user.id) }}">{{ _('Add New') }}</a></h3>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>{{ _('Customer') }}</th>
+                                            <th>{{ _('Gender') }}</th>
+                                            <th>{{ _('Phone') }}</th>
+                                            <th>{{ _('Address') }}</th>
+                                            <th>{{ _('Operations') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ad in user.deliveryInfos.all() %}
+                                        <tr>
+                                            <td>{{ ad.id }}</td>
+                                            <td>{{ ad.name }}</td>
+                                            {% if ad.gender == 1 %}
+                                                <td>{{ _('Male') }}</td>
+                                            {% elif ad.gender == 2 %}
+                                                <td>{{ _('Female') }}</td>
+                                            {% else %}
+                                                <td>{{ _('Unknown') }}</td>
+                                            {% endif %}
+                                            <td>{{ ad.phone_number }}</td>
+                                            <td>{{ _('Please View Detail') }}</td>
+                                            <td><a class="btn_2_thin" href="{{ url_for('main.modify_delivery_info',
+                                            delivery_id=ad.id) }}">{{ _('View Detail') }}</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="orders" class="tab-pane fade">
+                            <h3>{{ _('Orders') }}</h3>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ _('ID') }}</th>
+                                            <th>{{ _('Purchase Time') }}</th>
+                                            <th>{{ _('Ship Method') }}</th>
+                                            <th>{{ _('Status') }}</th>
+                                            <th>{{ _('Price') }}</th>
+                                            <th>{{ _('Actions') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for o in user.orders.all() %}
+                                        <tr>
+                                            <td>{{ o.id }}</td>
+                                            <td>{{ o.timestamp }}</td>
+                                            <td>{{ o.ship_way }}</td>
+                                            <td>{{ o.status }}</td>
+                                            <td>{{ o.price }}</td>
+                                            <td><a class="btn_2_thin" href="{{ url_for('main.my_order', order_id=o.id) }}">{{ _('View Detail') }}</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--My Account Area End-->
+
+<!-- Avatar Modal Start -->
+<div class="modal fade" id="avatarModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
+            </div>
+            <form action="{{ url_for('main.modify_avatar') }}" method="post" name="avatarForm" enctype="multipart/form-data">
+                <!-- Content -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><strong>{{ _('Upload New Avatar') }}</strong></label>
+                        <input name="avatar" class="form-control" type="file">
+                    </div>
+                    <input type="hidden" id="user_id" name="user_id" value="">
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">{{ _('Confirm') }}</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Avatar Modal End -->
+
+<script>
+    function Values_id(ID) {
+        return $("#user_id").val(ID);
+    }
+</script>
+{% endblock %}
+{#</body>
+</html>#}

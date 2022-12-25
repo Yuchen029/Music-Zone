@@ -1,0 +1,112 @@
+{% extends 'blog-base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+    function checkTitle() {
+        var title = document.getElementById("title").value;
+        var hint = document.getElementById("title_hint");
+        if(title === ""){
+            hint.innerHTML = "Title cannot be empty";
+            return false;
+        }
+        if (title !== undefined && title.length > 64){
+            hint.innerHTML = "Title is too long";
+            return false;
+        }
+        hint.innerHTML = "";
+        return true;
+    }
+
+    function checkDescription() {
+        var des = document.getElementById("description").value;
+        var hint = document.getElementById("des_hint");
+        if(des === ""){
+            hint.innerHTML = "Description cannot be empty";
+            return false;
+        }
+        if (des !== undefined && des.length > 1000){
+            hint.innerHTML = "Description is too long";
+            return false;
+        }
+        hint.innerHTML = "";
+        return true;
+    }
+
+    function validateForm() {
+        var flag = checkTitle() && checkDescription();
+        if (!flag){
+            if (!checkTitle()){
+                alert("Check Title!")
+            }
+            if (!checkDescription()){
+                alert("Check Description!")
+            }
+        }
+        console.log(flag)
+        return flag;
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+		<div id="main" class="content">
+			<div class="container">
+				<style>
+					body.custom-background {
+						background: #fff
+					}
+					
+					.container {
+						padding: 10px 0px;
+					}
+				</style>
+				<section class="post_content">
+					<header class="post_header">
+						<h1 class="post_title">{{ _('Add Blog') }}</h1>
+					</header>
+					<div class="links">
+						<div class="catalog-description"></div>
+						<div class="catalog-share">{{ _('Maximum 5 images, all images are below text') }}</div>
+						<form action="{{ url_for('main.add_blog') }}" method="post" onsubmit="return validateForm()" enctype="multipart/form-data" role="form">
+                            <div class="form-group">
+                                <label for="title">{{ _('Title') }}:</label>
+                                <input name="title" id="title" class="form-control" onkeyup="checkTitle()" placeholder='Enter title here'>
+                                <span id="title_hint" style="color: red"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">{{ _('Description') }}:</label>
+                                <textarea rows="3" cols="80" name="description" id="description" onkeyup="checkDescription()" class="form-control" placeholder='Enter description here'></textarea>
+                                <span id="des_hint" style="color: red"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ _('Image') }}1:</label>
+                                <input type="file" name="image1" id="image1">
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ _('Image') }}2:</label>
+                                <input type="file" name="image2" id="image2">
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ _('Image') }}3:</label>
+                                <input type="file" name="image3" id="image3">
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ _('Image') }}4:</label>
+                                <input type="file" name="image4" id="image4">
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ _('Image') }}5:</label>
+                                <input type="file" name="image5" id="image5">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">{{ _('Post') }}</button>
+                        </form>
+					</div>
+				</section>
+			</div>
+		</div>
+{% endblock %}

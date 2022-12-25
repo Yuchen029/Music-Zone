@@ -1,0 +1,14 @@
+# Pycharm ignore
+/.idea/
+
+# Python ignore
+__pycache__/
+
+# Database ignore
+data-dev.sqlite
+data-test.sqlite
+data.sqlite
+
+venv/
+
+.DS_Store
